@@ -3,1190 +3,2220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BackpackRation · Строгий порядок · Стильный фон</title>
+    <title>BackpackRation Pro · Горы vs Вода · Набор высоты</title>
     <style>
-        /* ========== БАЗОВЫЕ СТИЛИ (ДЕСКТОПНАЯ ВЕРСИЯ ПО УМОЛЧАНИЮ) ========== */
+        :root {
+            --primary: #f7b731;
+            --primary-dark: #9f711f;
+            --secondary: #1e3c2c;
+            --bg-cream: #fcf9ec;
+            --bg-card: rgba(255, 250, 235, 0.95);
+            --text-dark: #1e3c2c;
+            --text-muted: #5a4a3a;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --water: #3498db;
+            --shadow: 0 8px 32px rgba(0, 20, 0, 0.3);
+            --protein: #e74c3c;
+            --fat: #f39c12;
+            --carbs: #3498db;
+        }
+
         * {
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             margin: 0;
             padding: 0;
         }
 
         body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 16px;
-            position: relative;
-            transition: background 0.5s ease;
+            padding: 20px;
+            color: var(--text-dark);
         }
 
-        .background-layer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background-size: 140px 140px;
-            background-repeat: repeat;
-            opacity: 0.3;
-            transition: opacity 0.5s ease;
-            pointer-events: none;
-        }
-
-        .background-layer.water {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" width="140" height="140"><path d="M10 40 Q 25 25, 40 40 T 70 40 T 100 40" stroke="%231f4a82" stroke-width="3" fill="none" opacity="0.8"/><path d="M20 80 Q 40 65, 60 80 T 100 80 T 130 80" stroke="%23255b9c" stroke-width="2.5" fill="none"/><circle cx="50" cy="20" r="4" fill="%233072b5" opacity="0.7"/><circle cx="110" cy="60" r="5" fill="%231f4a82" opacity="0.8"/><circle cx="30" cy="110" r="3" fill="%23255b9c"/><path d="M80 110 Q 95 100, 110 110" stroke="%233072b5" stroke-width="2" fill="none"/><path d="M120 20 Q 130 30, 120 40" stroke="%23255b9c" stroke-width="2" fill="none"/><polygon points="20,130 24,122 30,130" fill="%231f4a82" opacity="0.8"/></svg>');
-            background-color: #b3d4f0;
-        }
-        .background-layer.mountain {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" width="140" height="140"><polygon points="20,60 35,20 50,60" fill="%233a424b" opacity="0.9"/><polygon points="45,80 65,30 85,80" fill="%234f5b66" opacity="0.8"/><polygon points="80,50 100,10 120,50" fill="%235a6877" opacity="0.9"/><polygon points="10,110 30,70 50,110" fill="%232c353d" opacity="0.8"/><polygon points="90,110 115,60 130,110" fill="%233f4a54" opacity="0.7"/><polygon points="110,40 125,20 140,40" fill="%234f5b66"/><polygon points="60,130 75,100 90,130" fill="%232c353d"/></svg>');
-            background-color: #7f8c8d;
-        }
-        .background-layer.forest {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" width="140" height="140"><polygon points="20,80 30,40 40,80" fill="%231b5e20" opacity="0.9"/><polygon points="15,100 30,70 45,100" fill="%232e7d32"/><polygon points="50,60 65,20 80,60" fill="%233c8d40" opacity="0.8"/><polygon points="70,90 85,50 100,90" fill="%234caf50" opacity="0.7"/><polygon points="100,40 115,10 130,40" fill="%231b5e20"/><polygon points="110,70 120,40 130,70" fill="%232e7d32"/><circle cx="35" cy="30" r="3" fill="%234caf50"/><circle cx="115" cy="110" r="4" fill="%233c8d40"/></svg>');
-            background-color: #81c784;
-        }
-        .background-layer.desert {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" width="140" height="140"><path d="M10 110 Q 30 90, 50 110 T 90 110 T 130 110" stroke="%23a77b2b" stroke-width="4" fill="none" opacity="0.9"/><path d="M20 80 Q 40 60, 60 80 T 100 80" stroke="%23b38f3a" stroke-width="3" fill="none"/><circle cx="45" cy="30" r="7" fill="%23c7a252" opacity="0.8"/><circle cx="100" cy="50" r="9" fill="%23a77b2b" opacity="0.7"/><polygon points="80,20 84,30 75,30" fill="%239f7c3a" opacity="0.8"/><polygon points="115,70 120,82 108,82" fill="%23b38f3a"/><polygon points="30,120 35,130 25,130" fill="%23c7a252"/><polygon points="125,30 130,40 118,40" fill="%23a77b2b"/></svg>');
-            background-color: #f4d03f;
-        }
-
-        /* Панель переключения версий */
-        .view-toggle {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            justify-content: flex-end;
-        }
-        .view-toggle button {
-            background: #f7b731;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 1rem;
-            color: #1d4d2d;
-            cursor: pointer;
-            box-shadow: 0 4px 0 #9f711f, 0 5px 10px rgba(0,0,0,0.2);
-            transition: 0.07s linear;
-            border: 2px solid #ffe9b6;
-        }
-        .view-toggle button:active {
-            transform: translateY(4px);
-            box-shadow: 0 0 0 #9f711f, 0 5px 10px rgba(0,0,0,0.2);
-        }
-
-        .card {
+        .container {
             max-width: 1400px;
-            width: 100%;
-            background: rgba(255, 250, 235, 0.92);
-            backdrop-filter: blur(8px);
-            border-radius: 48px 48px 32px 32px;
-            box-shadow: 0 25px 40px -10px rgba(0, 30, 0, 0.7), 0 10px 20px rgba(0,0,0,0.3);
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background: var(--bg-card);
+            border-radius: 24px;
             padding: 30px;
-            border: 2px solid rgba(235, 206, 159, 0.8);
-            transition: box-shadow 0.3s;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
         }
 
-        h1 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-weight: 700;
-            font-size: 2.5rem;
-            color: #1e3c2c;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-bottom: 3px dashed #a57c5c;
-            padding-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        h1 span {
-            font-size: 2rem;
-        }
-
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
+        .panel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            background: rgba(217, 197, 166, 0.85);
-            padding: 25px;
-            border-radius: 60px;
-            margin-bottom: 20px;
-            align-items: flex-end;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.2), 0 8px 12px rgba(0,20,0,0.25);
-            backdrop-filter: blur(4px);
+            margin-bottom: 25px;
         }
 
         .field {
-            flex: 1 1 150px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .field label {
-            display: block;
             font-weight: 600;
-            color: #2b4f2b;
-            margin-bottom: 6px;
-            font-size: 0.95rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
             letter-spacing: 0.5px;
-            text-shadow: 0 1px 2px rgba(255,255,200,0.5);
         }
 
-        .field select, .field input {
-            width: 100%;
-            padding: 12px 16px;
-            border: none;
-            border-radius: 40px;
-            background: #fef9e8;
+        .field input, .field select {
+            padding: 14px 18px;
+            border: 2px solid #e5caa0;
+            border-radius: 16px;
             font-size: 1rem;
-            font-weight: 500;
-            color: #1f3b2a;
-            border: 2px solid transparent;
-            transition: 0.2s;
-            box-shadow: 0 4px 8px rgba(0,20,0,0.3);
+            background: white;
+            transition: all 0.3s;
         }
 
-        .field select:focus, .field input:focus {
+        .field input:focus, .field select:focus {
             outline: none;
-            border-color: #f7b731;
-            background: #ffffff;
-            box-shadow: 0 6px 12px rgba(247,183,49,0.4);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(247, 183, 49, 0.2);
         }
 
-        button {
-            background: #f7b731;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.3rem;
-            color: #1d4d2d;
+        .trip-type-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .trip-type-card {
+            background: white;
+            border: 3px solid transparent;
+            border-radius: 20px;
+            padding: 25px;
             cursor: pointer;
-            box-shadow: 0 8px 0 #9f711f, 0 10px 20px rgba(0,0,0,0.25);
-            transition: 0.07s linear;
-            border: 2px solid #ffe9b6;
-            letter-spacing: 1px;
+            transition: all 0.3s;
+            text-align: center;
         }
 
-        button:active {
-            transform: translateY(8px);
-            box-shadow: 0 0 0 #9f711f, 0 5px 15px rgba(0,0,0,0.2);
+        .trip-type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
-        .type-hint {
-            background: rgba(236, 217, 180, 0.95);
-            border-radius: 40px;
-            padding: 12px 24px;
-            margin-bottom: 20px;
-            color: #2b4f2b;
-            font-weight: 500;
-            font-size: 1rem;
-            box-shadow: inset 0 1px 6px #a57c5c, 0 4px 8px rgba(0,20,0,0.25);
-            backdrop-filter: blur(2px);
+        .trip-type-card.active {
+            border-color: var(--primary);
+            background: rgba(247, 183, 49, 0.1);
         }
 
-        .result-title {
-            font-size: 1.8rem;
+        .trip-type-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .trip-type-title {
+            font-size: 1.3rem;
             font-weight: 700;
-            color: #283b1e;
-            margin: 30px 0 15px 0;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .trip-type-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .preferences-section {
+            background: rgba(247, 183, 49, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .preferences-section h3 {
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .checkbox-item {
             display: flex;
             align-items: center;
             gap: 10px;
-            text-shadow: 1px 1px 2px #f5e2c1;
+            padding: 10px;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .menu-days {
+        .checkbox-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+            box-shadow: 0 6px 0 var(--primary-dark), 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:active {
+            transform: translateY(6px);
+            box-shadow: 0 0 0 var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--secondary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--secondary);
+        }
+
+        /* Info Banner */
+        .info-banner {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.15) 0%, rgba(155, 89, 182, 0.15) 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .info-banner h4 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-banner ul {
+            margin-left: 20px;
+            color: var(--text-muted);
+        }
+
+        .info-banner li {
+            margin-bottom: 5px;
+        }
+
+        /* KBZH Summary Bar */
+        .kbzh-summary {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
 
+        .kbzh-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kbzh-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .kbzh-card.calories::before { background: var(--primary); }
+        .kbzh-card.protein::before { background: var(--protein); }
+        .kbzh-card.fat::before { background: var(--fat); }
+        .kbzh-card.carbs::before { background: var(--carbs); }
+
+        .kbzh-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .kbzh-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .kbzh-icon {
+            font-size: 1.5rem;
+        }
+
+        .kbzh-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .kbzh-card.calories .kbzh-value { color: var(--primary-dark); }
+        .kbzh-card.protein .kbzh-value { color: var(--protein); }
+        .kbzh-card.fat .kbzh-value { color: var(--fat); }
+        .kbzh-card.carbs .kbzh-value { color: var(--carbs); }
+
+        .kbzh-bar {
+            height: 12px;
+            background: #eee;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .kbzh-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        .kbzh-fill.calories { background: var(--primary); }
+        .kbzh-fill.protein { background: var(--protein); }
+        .kbzh-fill.fat { background: var(--fat); }
+        .kbzh-fill.carbs { background: var(--carbs); }
+
+        .kbzh-detail {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .kbzh-percent {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* Days Container */
+        .days-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
         .day-card {
-            background: rgba(252, 249, 236, 0.96);
-            border-radius: 35px;
-            padding: 20px;
-            box-shadow: 0 10px 0 #8f6f4b, 0 12px 25px -8px #2d3e2d, 0 0 0 2px #e5caa0 inset;
-            border: 2px solid #e5caa0;
-            transition: transform 0.2s;
+            background: white;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: transform 0.3s;
         }
+
         .day-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 0 #8f6f4b, 0 15px 30px -8px #1d2e1d;
+            transform: translateY(-5px);
         }
 
-        .day-card h3 {
-            margin: 0 0 15px 0;
-            font-size: 1.6rem;
-            color: #613d23;
-            border-left: 8px solid #f7b731;
-            padding-left: 15px;
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px dashed #e5caa0;
         }
 
-        .meal-block {
-            margin-bottom: 16px;
-            background: rgba(234, 219, 189, 0.9);
-            border-radius: 25px;
-            padding: 12px 15px;
-            box-shadow: inset 0 1px 4px rgba(0,0,0,0.2);
+        .day-title-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .day-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .day-total-kbzh {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85rem;
+        }
+
+        .day-stat-pill {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            background: #f0f0f0;
+        }
+
+        .day-stat-pill.calories { background: rgba(247, 183, 49, 0.2); color: var(--primary-dark); }
+        .day-stat-pill.protein { background: rgba(231, 76, 60, 0.15); color: var(--protein); }
+        .day-stat-pill.fat { background: rgba(243, 156, 18, 0.15); color: var(--fat); }
+        .day-stat-pill.carbs { background: rgba(52, 152, 219, 0.15); color: var(--carbs); }
+
+        .day-weight {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            background: rgba(247, 183, 49, 0.2);
+            padding: 10px 20px;
+            border-radius: 16px;
+        }
+
+        /* Meal Section */
+        .meal-section {
+            margin-bottom: 20px;
+            background: var(--bg-cream);
+            border-radius: 16px;
+            padding: 15px;
+        }
+
+        .meal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .meal-title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .meal-title {
             font-weight: 700;
-            color: #1e4a2a;
-            margin-bottom: 8px;
+            color: var(--secondary);
             font-size: 1.1rem;
+        }
+
+        .meal-kbzh-mini {
             display: flex;
-            align-items: center;
-            gap: 6px;
+            gap: 8px;
+            font-size: 0.75rem;
+        }
+
+        .kbzh-mini-pill {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .kbzh-mini-pill.calories { background: rgba(247, 183, 49, 0.2); color: var(--primary-dark); }
+        .kbzh-mini-pill.protein { background: rgba(231, 76, 60, 0.15); color: var(--protein); }
+        .kbzh-mini-pill.fat { background: rgba(243, 156, 18, 0.15); color: var(--fat); }
+        .kbzh-mini-pill.carbs { background: rgba(52, 152, 219, 0.15); color: var(--carbs); }
+
+        .meal-calories-badge {
+            background: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            color: var(--secondary);
+            border: 2px solid var(--primary);
+        }
+
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .product-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #fcf9ec;
-            border-radius: 40px;
-            padding: 6px 12px;
-            margin-bottom: 6px;
-            box-shadow: 0 2px 0 #8f6f4b, 0 3px 8px rgba(0,0,0,0.15);
-            border: 1px solid #e5caa0;
-            transition: background 0.2s;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
         }
+
         .product-item:hover {
-            background: #fff6df;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .product-info {
             display: flex;
             align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .product-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .product-icon.porridge { background: #ffeaa7; }
+        .product-icon.protein { background: #fab1a0; }
+        .product-icon.veg { background: #55efc4; }
+        .product-icon.sweet { background: #fd79a8; }
+        .product-icon.other { background: #dfe6e9; }
+
+        .product-details {
+            flex: 1;
         }
 
         .product-name {
             font-weight: 600;
-            color: #1d3a1d;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .product-kbzh {
+            display: flex;
+            gap: 10px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .kbzh-tag {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .kbzh-tag.protein { color: var(--protein); }
+        .kbzh-tag.fat { color: var(--fat); }
+        .kbzh-tag.carbs { color: var(--carbs); }
+
+        .product-weight-box {
+            text-align: right;
         }
 
         .product-weight {
-            color: #944e1f;
-            font-weight: 600;
-            background: #f7e5c2;
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--secondary);
+            font-size: 1.1rem;
         }
 
-        .edit-btn {
-            background: #f7b731;
+        .product-cal {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 6px;
+            margin-left: 10px;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
             border: none;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            font-size: 1.2rem;
-            line-height: 1;
+            border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 2px 0 #9f711f;
-            transition: 0.07s;
-            color: #1d4d2d;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        .edit-btn:active {
-            transform: translateY(2px);
-            box-shadow: none;
+            transition: all 0.2s;
+            font-size: 0.9rem;
         }
 
-        .total-section {
-            margin-top: 40px;
-            background: rgba(217, 197, 166, 0.9);
-            border-radius: 50px;
-            padding: 25px 30px;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.15), 0 8px 12px rgba(0,20,0,0.25);
-            backdrop-filter: blur(2px);
+        .btn-icon.edit { background: var(--primary); }
+        .btn-icon.lock { background: #74b9ff; }
+        .btn-icon.delete { background: #ff7675; }
+
+        .btn-icon:hover {
+            transform: scale(1.1);
         }
 
-        .total-title {
-            font-size: 2rem;
+        .product-item.locked {
+            opacity: 0.7;
+            background: #f8f9fa;
+        }
+
+        /* Day Summary Section */
+        .day-summary-section {
+            background: linear-gradient(135deg, rgba(247, 183, 49, 0.1) 0%, rgba(247, 183, 49, 0.05) 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 15px;
+            border: 2px solid rgba(247, 183, 49, 0.3);
+        }
+
+        .day-summary-title {
             font-weight: 700;
-            color: #1d3a1d;
-            margin-bottom: 20px;
+            color: var(--secondary);
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .total-list {
+        .day-kbzh-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
         }
 
-        .total-item {
-            background: #fcf9ec;
-            border-radius: 40px;
-            padding: 12px 20px;
-            font-size: 1.1rem;
-            color: #1e3c2c;
-            box-shadow: 0 4px 0 #8f6f4b, 0 5px 12px rgba(0,0,0,0.15);
-            border: 1px solid #e5caa0;
-        }
-
-        .total-item .gram {
-            float: right;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #944e1f;
-        }
-
-        .footer-note {
-            margin-top: 30px;
-            background: rgba(179, 139, 95, 0.9);
-            border-radius: 50px;
-            padding: 14px 28px;
-            color: #fff9e0;
-            font-weight: 600;
-            font-size: 1.1rem;
+        .day-kbzh-item {
             text-align: center;
-            box-shadow: 0 4px 0 #6b4f3a, 0 6px 12px rgba(0,0,0,0.25);
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
         }
 
-        .product-panel {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: 340px;
-            background: #f5ebd2;
-            box-shadow: 4px 0 20px rgba(0,20,0,0.5);
-            border-radius: 0 32px 32px 0;
-            padding: 24px 16px;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 1000;
-            overflow-y: auto;
-            border-right: 3px solid #a57c5c;
-            backdrop-filter: blur(4px);
-        }
-
-        .product-panel.open {
-            transform: translateX(0);
-        }
-
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
+        .day-kbzh-value {
             font-size: 1.5rem;
-            font-weight: 700;
-            color: #1d4d2d;
+            font-weight: 800;
+            margin-bottom: 5px;
         }
 
-        .close-panel {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #7b5a3a;
-            padding: 0 10px;
-            box-shadow: none;
-        }
+        .day-kbzh-value.calories { color: var(--primary-dark); }
+        .day-kbzh-value.protein { color: var(--protein); }
+        .day-kbzh-value.fat { color: var(--fat); }
+        .day-kbzh-value.carbs { color: var(--carbs); }
 
-        .product-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .product-card {
-            background: #fcf9ec;
-            border-radius: 60px;
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 0 #8f6f4b, 0 5px 12px rgba(0,0,0,0.15);
-            border: 1px solid #e5caa0;
-        }
-
-        .product-card .product-name {
+        .day-kbzh-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
             font-weight: 600;
-            color: #1e3c2c;
-            font-size: 1rem;
-            flex: 2;
+            text-transform: uppercase;
         }
 
-        .product-weight {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex: 1;
-            justify-content: flex-end;
-        }
-
-        .product-weight input {
-            width: 70px;
-            padding: 6px 8px;
-            border: none;
-            border-radius: 40px;
-            background: #fef9e8;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #1f3b2a;
-            border: 2px solid transparent;
-            transition: 0.2s;
-            box-shadow: 0 2px 5px rgba(0,20,0,0.2);
-            text-align: center;
-        }
-
-        .product-weight input:focus {
-            outline: none;
-            border-color: #f7b731;
-            background: #ffffff;
-        }
-
-        .product-weight span {
-            font-size: 0.9rem;
-            color: #944e1f;
+        .day-kbzh-percent {
+            font-size: 0.75rem;
+            margin-top: 5px;
+            padding: 4px 8px;
+            border-radius: 10px;
+            display: inline-block;
             font-weight: 600;
-            min-width: 30px;
         }
 
-        .menu-toggle {
-            position: fixed;
-            top: 30px;
-            left: 30px;
-            background: #f7b731;
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            font-size: 2rem;
-            cursor: pointer;
-            box-shadow: 0 8px 0 #9f711f, 0 10px 20px rgba(0,0,0,0.25);
-            border: 2px solid #ffe9b6;
-            z-index: 1100;
+        .day-kbzh-percent.protein { background: rgba(231, 76, 60, 0.1); color: var(--protein); }
+        .day-kbzh-percent.fat { background: rgba(243, 156, 18, 0.1); color: var(--fat); }
+        .day-kbzh-percent.carbs { background: rgba(52, 152, 219, 0.1); color: var(--carbs); }
+
+        /* Chart Bars */
+        .macro-chart {
+            display: flex;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 15px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .macro-segment {
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.07s linear;
-            color: #1d4d2d;
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 0.3s;
         }
 
-        .menu-toggle:active {
-            transform: translateY(8px);
-            box-shadow: 0 0 0 #9f711f, 0 5px 15px rgba(0,0,0,0.2);
+        .macro-segment.protein { background: var(--protein); }
+        .macro-segment.fat { background: var(--fat); }
+        .macro-segment.carbs { background: var(--carbs); }
+
+        /* Water Section */
+        .water-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
         }
 
-        .overlay {
+        .water-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .water-header h2 {
+            font-size: 1.8rem;
+        }
+
+        .water-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .water-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .water-amount {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .water-label {
+            opacity: 0.9;
+        }
+
+        /* Total Section */
+        .total-section {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .total-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .total-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .packaging-toggle {
+            display: flex;
+            gap: 10px;
+            background: #f0f0f0;
+            padding: 5px;
+            border-radius: 12px;
+        }
+
+        .packaging-toggle button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .packaging-toggle button.active {
+            background: var(--primary);
+            color: var(--secondary);
+        }
+
+        .total-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .total-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: var(--bg-cream);
+            border-radius: 16px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .total-item.packaged {
+            background: #e8f5e9;
+            border-left-color: var(--success);
+        }
+
+        .total-info {
+            flex: 1;
+        }
+
+        .total-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .total-detail {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .total-weight {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        /* Modal */
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-            z-index: 900;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
             display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
         }
 
-        .overlay.show {
-            display: block;
+        .modal-overlay.active {
+            display: flex;
         }
 
-        .temp-select {
-            position: fixed;
+        .modal {
             background: white;
-            border-radius: 30px;
-            padding: 8px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            z-index: 1200;
-            border: 2px solid #f7b731;
-            font-size: 1rem;
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalIn 0.3s ease;
         }
 
-        /* ========== МОБИЛЬНАЯ ВЕРСИЯ (КЛАСС НА BODY) ========== */
-        body.mobile-layout {
-            padding: 8px;
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
-        body.mobile-layout .card {
-            padding: 16px;
-            border-radius: 24px;
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
-        body.mobile-layout h1 {
-            font-size: 1.8rem;
-            gap: 8px;
-        }
-        body.mobile-layout h1 span {
+
+        .modal-title {
             font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--secondary);
         }
-        body.mobile-layout .form-row {
-            flex-direction: column;
-            padding: 16px;
-            border-radius: 30px;
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
         }
-        body.mobile-layout .field {
-            width: 100%;
+
+        .product-selector {
+            display: grid;
+            gap: 10px;
         }
-        body.mobile-layout .field label {
+
+        .product-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .product-option:hover {
+            border-color: var(--primary);
+            background: rgba(247, 183, 49, 0.05);
+        }
+
+        .product-option.selected {
+            border-color: var(--primary);
+            background: rgba(247, 183, 49, 0.1);
+        }
+
+        .option-kbzh {
+            display: flex;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Text Export Modal */
+        .text-export-modal {
+            max-width: 800px;
+            width: 95%;
+        }
+
+        .text-export-content {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
             font-size: 0.9rem;
+            line-height: 1.6;
+            max-height: 60vh;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border: 2px solid #e0e0e0;
         }
-        body.mobile-layout .field select,
-        body.mobile-layout .field input {
-            padding: 14px 16px;
-            font-size: 1rem;
+
+        .text-export-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: flex-end;
         }
-        body.mobile-layout button {
-            width: 100%;
-            padding: 16px 20px;
-            font-size: 1.2rem;
-            box-shadow: 0 6px 0 #9f711f, 0 8px 16px rgba(0,0,0,0.25);
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .header h1 { font-size: 2rem; }
+            .days-container { grid-template-columns: 1fr; }
+            .panel-grid { grid-template-columns: 1fr; }
+            .kbzh-summary { grid-template-columns: repeat(2, 1fr); }
+            .day-kbzh-grid { grid-template-columns: repeat(2, 1fr); }
+            .trip-type-selector { grid-template-columns: 1fr; }
+            .action-buttons { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
         }
-        body.mobile-layout .menu-days {
-            grid-template-columns: 1fr;
+
+        /* Print styles */
+        @media print {
+            body { background: white; }
+            .control-panel, .btn, .product-actions { display: none; }
+            .day-card { break-inside: avoid; page-break-inside: avoid; }
         }
-        body.mobile-layout .day-card h3 {
-            font-size: 1.4rem;
+
+        /* Animations */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        body.mobile-layout .product-item {
-            padding: 10px 12px;
+
+        .day-card {
+            animation: slideIn 0.4s ease;
         }
-        body.mobile-layout .edit-btn {
-            width: 40px;
-            height: 40px;
-            font-size: 1.5rem;
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--secondary);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            display: none;
+            align-items: center;
+            gap: 15px;
+            z-index: 2000;
+            animation: slideUp 0.3s ease;
         }
-        body.mobile-layout .total-section {
-            padding: 16px;
+
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
-        body.mobile-layout .total-list {
-            grid-template-columns: 1fr;
-        }
-        body.mobile-layout .product-panel {
-            width: 100%;
-            border-radius: 0;
-        }
-        body.mobile-layout .view-toggle button {
-            padding: 12px 16px;
-            font-size: 1rem;
-            flex: 1;
-        }
-        body.mobile-layout .view-toggle {
-            gap: 8px;
-        }
-        body.mobile-layout .menu-toggle {
-            top: 16px;
-            left: 16px;
-            width: 50px;
-            height: 50px;
-            font-size: 1.8rem;
+
+        .notification.show {
+            display: flex;
         }
     </style>
 </head>
 <body>
-    <div class="background-layer" id="bgLayer"></div>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🎒 BackpackRation Pro</h1>
+            <p>Умный генератор: Горы ⛰️ vs Вода 🌊 · Средний набор высоты</p>
+        </header>
 
-    <button class="menu-toggle" id="menuToggle">📦</button>
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <h3 style="margin-bottom: 15px; color: var(--secondary);">🗺️ Тип похода</h3>
+            <div class="trip-type-selector">
+                <div class="trip-type-card active" id="mountainCard" onclick="setTripType('mountain')">
+                    <div class="trip-type-icon">⛰️</div>
+                    <div class="trip-type-title">Горный поход</div>
+                    <div class="trip-type-desc">Высокие нагрузки, набор высоты, гипоксия. Больше углеводов, меньше жиров.</div>
+                </div>
+                <div class="trip-type-card" id="waterCard" onclick="setTripType('water')">
+                    <div class="trip-type-icon">🌊</div>
+                    <div class="trip-type-title">Водный поход</div>
+                    <div class="trip-type-desc">Равномерная нагрузка, доступ к воде. Стандартное соотношение БЖУ.</div>
+                </div>
+            </div>
 
-    <div class="product-panel" id="productPanel">
-        <div class="panel-header">
-            <span>🍏 Редактор продуктов</span>
-            <button class="close-panel" id="closePanel">✕</button>
+            <div class="info-banner" id="mountainInfo">
+                <h4>⚠️ Особенности горного питания</h4>
+                <ul>
+                    <li>На высоте жиры усваиваются хуже — снижаем их долю [^3^]</li>
+                    <li>Увеличиваем углеводы для быстрого восстановления энергии [^4^]</li>
+                    <li>При наборе >1000м/день: +15% калорий, акцент на легкоусвояемую пищу [^2^]</li>
+                    <li>Первые 2-3 дня — пониженная калорийность (2400-2600 ккал) для адаптации [^3^]</li>
+                </ul>
+            </div>
+
+            <div class="info-banner" id="waterInfo" style="display: none;">
+                <h4>🚣 Особенности водного питания</h4>
+                <ul>
+                    <li>Стандартное соотношение БЖУ: 15% белки, 30% жиры, 55% углеводы [^1^]</li>
+                    <li>Возможность свежих овощей (если есть базы/поселки) [^5^]</li>
+                    <li>Меньше сублимированных продуктов — можно тушёнку и колбасу [^5^]</li>
+                    <li>Доступ к воде позволяет готовить более сложные блюда [^5^]</li>
+                </ul>
+            </div>
+
+            <div class="panel-grid">
+                <div class="field">
+                    <label>📅 Дней в походе</label>
+                    <input type="number" id="daysCount" min="1" max="14" value="5">
+                </div>
+                <div class="field">
+                    <label>👥 Количество участников</label>
+                    <input type="number" id="membersCount" min="1" max="20" value="4">
+                </div>
+                <div class="field">
+                    <label>🚶 Км в день</label>
+                    <input type="number" id="kmPerDay" min="5" max="50" value="20">
+                </div>
+                <div class="field">
+                    <label>📈 Средний набор высоты (м/день)</label>
+                    <input type="number" id="elevationGain" min="0" max="2000" value="500" title="Сколько метров в среднем набираете за день">
+                </div>
+                <div class="field">
+                    <label>⛰️ Максимальная высота (м)</label>
+                    <input type="number" id="maxAltitude" min="0" max="5000" value="1500">
+                </div>
+                <div class="field">
+                    <label>🌡️ Температура</label>
+                    <select id="temperature">
+                        <option value="hot">Жарко (+25°C и выше)</option>
+                        <option value="normal" selected>Норма (+10 до +25°C)</option>
+                        <option value="cold">Холодно (0 до +10°C)</option>
+                        <option value="frost">Мороз (ниже 0°C)</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>🔥 Способ готовки</label>
+                    <select id="cookingMethod">
+                        <option value="gas">Газовая горелка</option>
+                        <option value="fire">Костёр</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>📊 Сложность маршрута</label>
+                    <select id="difficulty">
+                        <option value="easy">Лёгкая (ПВД, 1 к.с.)</option>
+                        <option value="medium" selected>Средняя (2-3 к.с.)</option>
+                        <option value="hard">Сложная (4-5 к.с.)</option>
+                        <option value="extreme">Экстремальная (6 к.с.)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="preferences-section">
+                <h3>🚫 Исключить из меню</h3>
+                <div class="checkbox-grid" id="excludeGrid"></div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="generateMenu()">
+                    ✨ Сгенерировать меню
+                </button>
+                <button class="btn btn-secondary" onclick="exportToText()">
+                    📄 Текстовый отчёт
+                </button>
+                <button class="btn btn-secondary" onclick="exportToPDF()">
+                    🖨️ Печать / PDF
+                </button>
+            </div>
         </div>
-        <div class="product-grid" id="productGrid"></div>
+
+        <!-- KBZH Summary -->
+        <div class="kbzh-summary" id="kbzhSummary" style="display: none;">
+            <div class="kbzh-card calories">
+                <div class="kbzh-header">
+                    <span class="kbzh-title">Калории</span>
+                    <span class="kbzh-icon">🔥</span>
+                </div>
+                <div class="kbzh-value" id="sumCalories">0</div>
+                <div class="kbzh-bar">
+                    <div class="kbzh-fill calories" id="calBar" style="width: 0%"></div>
+                </div>
+                <div class="kbzh-detail">
+                    <span>в день</span>
+                    <span class="kbzh-percent" id="calPercent">0%</span>
+                </div>
+            </div>
+            <div class="kbzh-card protein">
+                <div class="kbzh-header">
+                    <span class="kbzh-title">Белки</span>
+                    <span class="kbzh-icon">🥩</span>
+                </div>
+                <div class="kbzh-value" id="sumProtein">0</div>
+                <div class="kbzh-bar">
+                    <div class="kbzh-fill protein" id="proteinBar" style="width: 0%"></div>
+                </div>
+                <div class="kbzh-detail">
+                    <span>грамм в день</span>
+                    <span class="kbzh-percent" id="proteinPercent">0%</span>
+                </div>
+            </div>
+            <div class="kbzh-card fat">
+                <div class="kbzh-header">
+                    <span class="kbzh-title">Жиры</span>
+                    <span class="kbzh-icon">🥑</span>
+                </div>
+                <div class="kbzh-value" id="sumFat">0</div>
+                <div class="kbzh-bar">
+                    <div class="kbzh-fill fat" id="fatBar" style="width: 0%"></div>
+                </div>
+                <div class="kbzh-detail">
+                    <span>грамм в день</span>
+                    <span class="kbzh-percent" id="fatPercent">0%</span>
+                </div>
+            </div>
+            <div class="kbzh-card carbs">
+                <div class="kbzh-header">
+                    <span class="kbzh-title">Углеводы</span>
+                    <span class="kbzh-icon">🍚</span>
+                </div>
+                <div class="kbzh-value" id="sumCarbs">0</div>
+                <div class="kbzh-bar">
+                    <div class="kbzh-fill carbs" id="carbsBar" style="width: 0%"></div>
+                </div>
+                <div class="kbzh-detail">
+                    <span>грамм в день</span>
+                    <span class="kbzh-percent" id="carbsPercent">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Water Section -->
+        <div class="water-section" id="waterSection" style="display: none;">
+            <div class="water-header">
+                <span style="font-size: 3rem;">💧</span>
+                <h2>Расчёт воды для готовки</h2>
+            </div>
+            <div class="water-grid" id="waterGrid"></div>
+        </div>
+
+        <!-- Days Container -->
+        <div class="days-container" id="daysContainer"></div>
+
+        <!-- Total Section -->
+        <div class="total-section" id="totalSection" style="display: none;">
+            <div class="total-header">
+                <h2 class="total-title">📦 Итоговая раскладка</h2>
+                <div class="packaging-toggle">
+                    <button class="active" onclick="setPackagingMode('total')">Общий вес</button>
+                    <button onclick="setPackagingMode('daily')">По дням</button>
+                    <button onclick="setPackagingMode('packs')">По пакетам</button>
+                </div>
+            </div>
+            <div class="total-grid" id="totalGrid"></div>
+        </div>
     </div>
 
-    <div class="overlay" id="overlay"></div>
-
-    <div class="card">
-        <div class="view-toggle">
-            <button id="desktopView">💻 Компьютер</button>
-            <button id="mobileView">📱 Телефон</button>
-        </div>
-
-        <h1>
-            <span>🥾</span> BackpackRation · Походное меню
-            <span>⚖️</span>
-        </h1>
-
-        <div class="form-row">
-            <div class="field">
-                <label>🌲 Тип похода</label>
-                <select id="tripType">
-                    <option value="water">Водный</option>
-                    <option value="mountain" selected>Горный</option>
-                    <option value="forest">Лесной</option>
-                    <option value="desert">Пустынный</option>
-                </select>
+    <!-- Product Modal -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Заменить продукт</h3>
+                <button class="modal-close" onclick="closeModal()">✕</button>
             </div>
-            <div class="field">
-                <label>📆 Дней</label>
-                <input type="number" id="daysCount" min="1" max="14" value="7">
-            </div>
-            <div class="field">
-                <label>👥 Участников</label>
-                <input type="number" id="membersCount" min="1" max="20" value="4">
-            </div>
-            <div class="field">
-                <label>🚶 Км/день</label>
-                <input type="number" id="kmPerDay" min="5" max="50" value="20">
-            </div>
-            <div class="field">
-                <label>⛰️ Высота (м)</label>
-                <input type="number" id="altitude" min="0" max="5000" value="1000">
-            </div>
-            <div class="field">
-                <label>🔥 Способ</label>
-                <select id="cookingMethod">
-                    <option value="gas">Газ</option>
-                    <option value="fire">Костёр</option>
-                </select>
-            </div>
-            <button id="generateBtn">✨ Сгенерировать</button>
+            <div class="product-selector" id="productSelector"></div>
         </div>
+    </div>
 
-        <div class="type-hint" id="typeHint">
-            ⛰️ Коррекция веса по нагрузке и высоте.
+    <!-- Text Export Modal -->
+    <div class="modal-overlay" id="textExportModal">
+        <div class="modal text-export-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">📄 Текстовый отчёт для печати / сохранения</h3>
+                <button class="modal-close" onclick="closeTextModal()">✕</button>
+            </div>
+            <div class="text-export-content" id="textExportContent"></div>
+            <div class="text-export-actions">
+                <button class="btn btn-secondary" onclick="copyTextReport()">📋 Копировать</button>
+                <button class="btn btn-primary" onclick="downloadTextReport()">💾 Сохранить .txt</button>
+            </div>
         </div>
+    </div>
 
-        <div id="menuArea">
-            <div class="result-title">🍽️ Меню по дням (продукты можно заменять)</div>
-            <div class="menu-days" id="menuGrid"></div>
-        </div>
-
-        <div class="total-section" id="totalSection" style="display: none;">
-            <div class="total-title">📦 Общий вес продуктов на всех</div>
-            <div class="total-list" id="totalList"></div>
-        </div>
-
-        <div class="footer-note">
-            ⚡ Нажмите ✎ рядом с продуктом, чтобы заменить его. Веса можно менять в левой панели.
-        </div>
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <span id="notifIcon">✅</span>
+        <span id="notifText">Готово!</span>
     </div>
 
     <script>
-        (function() {
-            // ---------- РАСШИРЕННЫЙ СПИСОК ПРОДУКТОВ ----------
-            const products = {
-                // Каши для завтрака
-                oatmeal: { name: "Овсянка", baseWeight: 30, category: "porridge" },
-                semolina: { name: "Манка", baseWeight: 30, category: "porridge" },
-                cornPorridge: { name: "Кукурузная каша", baseWeight: 30, category: "porridge" },
-                wheatPorridge: { name: "Пшеничная каша", baseWeight: 30, category: "porridge" },
-                barleyPorridge: { name: "Ячневая каша", baseWeight: 30, category: "porridge" },
-                ricePorridge: { name: "Рисовая каша", baseWeight: 30, category: "porridge" },
-                
-                // Гарниры (для обеда/ужина)
-                perk: { name: "Перловка", baseWeight: 50, category: "garnish" },
-                millet: { name: "Пшено", baseWeight: 50, category: "garnish" },
-                buckwheat: { name: "Гречка", baseWeight: 50, category: "garnish" },
-                rice: { name: "Рис", baseWeight: 50, category: "garnish" },
-                macaroni: { name: "Макароны (перья)", baseWeight: 50, category: "garnish" },
-                spaghetti: { name: "Спагетти", baseWeight: 50, category: "garnish" },
-                
-                // Супы
-                soupChicken: { name: "Суп куриный (пакет)", baseWeight: 30, category: "soup" },
-                soupBorscht: { name: "Суп борщ (пакет)", baseWeight: 30, category: "soup" },
-                soupPea: { name: "Суп гороховый (пакет)", baseWeight: 30, category: "soup" },
-                soupKharcho: { name: "Суп харчо (пакет)", baseWeight: 30, category: "soup" },
-                
-                // Белок
-                subMeat: { name: "Сублимированное мясо", baseWeight: 15, category: "protein" },
-                cannedMeat: { name: "Тушёнка (говяжья)", baseWeight: 50, category: "protein" },
-                cannedFish: { name: "Консервы рыбные", baseWeight: 40, category: "protein" },
-                
-                // Намазки/колбасы/сыры
-                pate: { name: "Паштет", baseWeight: 30, category: "spread" },
-                cheese: { name: "Сыр (твёрдый)", baseWeight: 40, category: "spread" },
-                processedCheese: { name: "Сыр плавленый", baseWeight: 30, category: "spread" },
-                sausage: { name: "Колбаса варёная", baseWeight: 40, category: "spread" },
-                salami: { name: "Салями", baseWeight: 35, category: "spread" },
-                
-                // Овощи сублимированные
-                subVeg: { name: "Сублимированные овощи", baseWeight: 5, category: "veg" },
-                subBeet: { name: "Свекла сублимированная", baseWeight: 5, category: "veg" },
-                subPea: { name: "Горошек сублимированный", baseWeight: 5, category: "veg" },
-                
-                // Молочка
-                milkPowder: { name: "Сухое молоко", baseWeight: 8, category: "milk" },
-                
-                // Хлеб
-                bread: { name: "Хлебец", baseWeight: 20, category: "bread" },
-                crackers: { name: "Сухарики", baseWeight: 15, category: "bread" },
-                
-                // Сладкое
-                chocolate: { name: "Шоколад", baseWeight: 15, category: "sweet" },
-                sweets: { name: "Конфеты (карамель)", baseWeight: 15, category: "sweet" },
-                cookies: { name: "Печенье", baseWeight: 20, category: "sweet" },
-                
-                // Фрукты/орехи
-                nuts: { name: "Орехи (смесь)", baseWeight: 20, category: "fruitNuts" },
-                driedFruits: { name: "Курага/чернослив", baseWeight: 15, category: "fruitNuts" },
-                driedBananas: { name: "Сушеные бананы", baseWeight: 10, category: "fruitNuts" },
-                driedApples: { name: "Сушеные яблоки", baseWeight: 10, category: "fruitNuts" },
-                candiedFruits: { name: "Цукаты", baseWeight: 10, category: "fruitNuts" },
-                
-                // Приправы (без бульона – бульон теперь отдельно)
-                soySauce: { name: "Соевый соус", baseWeight: 10, category: "condiment" },
-                salt: { name: "Соль", baseWeight: 3, category: "condiment" },
-                spices: { name: "Специи (смесь)", baseWeight: 2, category: "condiment" },
-                ketchup: { name: "Кетчуп", baseWeight: 15, category: "condiment" },
-                
-                // Бульон (теперь отдельно, только для обеда)
-                broth: { name: "Бульон", baseWeight: 5, category: "condiment" },
-                
-                // Чай, кофе, сахар
-                tea: { name: "Чай", baseWeight: 2, category: "tea" },
-                coffee: { name: "Кофе", baseWeight: 2, category: "tea" },
-                sugar: { name: "Сахар", baseWeight: 10, category: "sugar" }
-            };
+        // ==========================================
+        // DATA
+        // ==========================================
+        
+        const CATEGORIES = {
+            PORRIDGE: { name: 'Каша', icon: '🌾', color: 'porridge', order: 1 },
+            PROTEIN: { name: 'Белок', icon: '🥩', color: 'protein', order: 2 },
+            GARNISH: { name: 'Гарнир', icon: '🍚', color: 'porridge', order: 3 },
+            SOUP: { name: 'Суп', icon: '🍜', color: 'other', order: 4 },
+            SPREAD: { name: 'Намазка', icon: '🧀', color: 'other', order: 5 },
+            VEG: { name: 'Овощи', icon: '🥬', color: 'veg', order: 6 },
+            SWEET: { name: 'Сладкое', icon: '🍫', color: 'sweet', order: 7 },
+            BREAD: { name: 'Хлеб', icon: '🍞', color: 'other', order: 8 },
+            CONDIMENT: { name: 'Приправа', icon: '🧂', color: 'other', order: 9 },
+            TEA: { name: 'Напиток', icon: '☕', color: 'other', order: 10 },
+            FRUIT: { name: 'Фрукты', icon: '🍎', color: 'sweet', order: 11 }
+        };
 
-            // Категоризированные массивы
-            const porridgesList = [products.oatmeal, products.semolina, products.cornPorridge, products.wheatPorridge, products.barleyPorridge, products.ricePorridge];
-            const breakfastAddons = [products.driedBananas, products.driedApples, products.candiedFruits, products.driedFruits, products.nuts];
-            const garnishes = [products.macaroni, products.rice, products.buckwheat, products.perk, products.millet, products.spaghetti];
-            const soups = [products.soupChicken, products.soupBorscht, products.soupPea, products.soupKharcho];
-            const subVegs = [products.subVeg, products.subBeet, products.subPea];
-            const sweetsList = [products.chocolate, products.sweets, products.cookies];
-            const condiments = [products.soySauce, products.salt, products.spices, products.ketchup]; // broth исключён
-            const proteinList = [products.subMeat, products.cannedMeat, products.cannedFish];
-            const spreadList = [products.cheese, products.processedCheese, products.sausage, products.salami, products.pate];
-            const broths = [products.broth]; // отдельно для обеда
+        const PRODUCTS = [
+            // Каши
+            { id: 'oatmeal', name: 'Овсянка', category: 'PORRIDGE', baseWeight: 80, kcal: 350, protein: 12, fat: 6, carbs: 60, waterRatio: 2.5 },
+            { id: 'semolina', name: 'Манная каша', category: 'PORRIDGE', baseWeight: 70, kcal: 320, protein: 10, fat: 4, carbs: 65, waterRatio: 3 },
+            { id: 'rice_porridge', name: 'Рисовая каша', category: 'PORRIDGE', baseWeight: 70, kcal: 340, protein: 7, fat: 2, carbs: 75, waterRatio: 2.5 },
+            
+            // Белок
+            { id: 'sub_meat', name: 'Сублимированное мясо', category: 'PROTEIN', baseWeight: 30, kcal: 120, protein: 25, fat: 2, carbs: 0, waterRatio: 1 },
+            { id: 'canned_meat', name: 'Тушёнка говяжья', category: 'PROTEIN', baseWeight: 50, kcal: 180, protein: 15, fat: 12, carbs: 0, waterRatio: 0 },
+            { id: 'canned_fish', name: 'Рыбные консервы', category: 'PROTEIN', baseWeight: 40, kcal: 140, protein: 18, fat: 8, carbs: 0, waterRatio: 0 },
+            { id: 'sausage', name: 'Колбаса варёная', category: 'PROTEIN', baseWeight: 40, kcal: 160, protein: 12, fat: 12, carbs: 2, waterRatio: 0 },
+            
+            // Гарниры
+            { id: 'buckwheat', name: 'Гречка', category: 'GARNISH', baseWeight: 80, kcal: 310, protein: 12, fat: 3, carbs: 62, waterRatio: 2 },
+            { id: 'rice', name: 'Рис', category: 'GARNISH', baseWeight: 70, kcal: 280, protein: 6, fat: 1, carbs: 62, waterRatio: 2 },
+            { id: 'pasta', name: 'Макароны', category: 'GARNISH', baseWeight: 80, kcal: 290, protein: 10, fat: 2, carbs: 58, waterRatio: 1.5 },
+            { id: 'pearl_barley', name: 'Перловка', category: 'GARNISH', baseWeight: 80, kcal: 300, protein: 9, fat: 2, carbs: 65, waterRatio: 3 },
+            
+            // Супы
+            { id: 'soup_chicken', name: 'Суп куриный', category: 'SOUP', baseWeight: 30, kcal: 80, protein: 5, fat: 3, carbs: 10, waterRatio: 8 },
+            { id: 'soup_pea', name: 'Гороховый суп', category: 'SOUP', baseWeight: 35, kcal: 110, protein: 7, fat: 2, carbs: 18, waterRatio: 7 },
+            { id: 'borscht', name: 'Борщ сушёный', category: 'SOUP', baseWeight: 30, kcal: 70, protein: 3, fat: 1, carbs: 14, waterRatio: 8 },
+            
+            // Намазки
+            { id: 'cheese', name: 'Сыр твёрдый', category: 'SPREAD', baseWeight: 40, kcal: 160, protein: 12, fat: 12, carbs: 1, waterRatio: 0 },
+            { id: 'processed_cheese', name: 'Плавленый сыр', category: 'SPREAD', baseWeight: 30, kcal: 100, protein: 6, fat: 8, carbs: 2, waterRatio: 0 },
+            { id: 'pate', name: 'Паштет', category: 'SPREAD', baseWeight: 30, kcal: 90, protein: 5, fat: 7, carbs: 2, waterRatio: 0 },
+            
+            // Овощи
+            { id: 'sub_veg', name: 'Сублимированные овощи', category: 'VEG', baseWeight: 15, kcal: 50, protein: 2, fat: 0, carbs: 10, waterRatio: 4 },
+            { id: 'onion', name: 'Лук сушёный', category: 'VEG', baseWeight: 10, kcal: 30, protein: 1, fat: 0, carbs: 7, waterRatio: 3 },
+            
+            // Сладкое
+            { id: 'chocolate', name: 'Шоколад', category: 'SWEET', baseWeight: 20, kcal: 110, protein: 2, fat: 7, carbs: 12, waterRatio: 0 },
+            { id: 'candy', name: 'Карамель', category: 'SWEET', baseWeight: 20, kcal: 80, protein: 0, fat: 1, carbs: 18, waterRatio: 0 },
+            { id: 'cookies', name: 'Печенье', category: 'SWEET', baseWeight: 25, kcal: 120, protein: 3, fat: 5, carbs: 18, waterRatio: 0 },
+            { id: 'halva', name: 'Халва', category: 'SWEET', baseWeight: 25, kcal: 140, protein: 4, fat: 10, carbs: 12, waterRatio: 0 },
+            
+            // Хлеб
+            { id: 'bread', name: 'Хлебцы', category: 'BREAD', baseWeight: 30, kcal: 80, protein: 3, fat: 1, carbs: 16, waterRatio: 0 },
+            { id: 'crackers', name: 'Сухарики', category: 'BREAD', baseWeight: 25, kcal: 100, protein: 3, fat: 2, carbs: 18, waterRatio: 0 },
+            
+            // Приправы
+            { id: 'salt', name: 'Соль', category: 'CONDIMENT', baseWeight: 5, kcal: 0, protein: 0, fat: 0, carbs: 0, waterRatio: 0 },
+            { id: 'spices', name: 'Специи', category: 'CONDIMENT', baseWeight: 3, kcal: 10, protein: 0, fat: 0, carbs: 2, waterRatio: 0 },
+            { id: 'sauce', name: 'Соевый соус', category: 'CONDIMENT', baseWeight: 15, kcal: 20, protein: 2, fat: 0, carbs: 3, waterRatio: 0 },
+            { id: 'oil', name: 'Растительное масло', category: 'CONDIMENT', baseWeight: 15, kcal: 135, protein: 0, fat: 15, carbs: 0, waterRatio: 0 },
+            { id: 'broth', name: 'Бульонный кубик', category: 'CONDIMENT', baseWeight: 5, kcal: 10, protein: 1, fat: 0, carbs: 2, waterRatio: 0 },
+            
+            // Напитки
+            { id: 'tea', name: 'Чай', category: 'TEA', baseWeight: 3, kcal: 0, protein: 0, fat: 0, carbs: 0, waterRatio: 0 },
+            { id: 'coffee', name: 'Кофе', category: 'TEA', baseWeight: 4, kcal: 0, protein: 0, fat: 0, carbs: 0, waterRatio: 0 },
+            { id: 'sugar', name: 'Сахар', category: 'TEA', baseWeight: 20, kcal: 80, protein: 0, fat: 0, carbs: 20, waterRatio: 0 },
+            { id: 'milk_powder', name: 'Сухое молоко', category: 'TEA', baseWeight: 20, kcal: 100, protein: 5, fat: 5, carbs: 10, waterRatio: 4 },
+            
+            // Фрукты/орехи
+            { id: 'nuts', name: 'Орехи смесь', category: 'FRUIT', baseWeight: 25, kcal: 155, protein: 5, fat: 14, carbs: 6, waterRatio: 0 },
+            { id: 'dried_fruits', name: 'Курага/Чернослив', category: 'FRUIT', baseWeight: 25, kcal: 60, protein: 1, fat: 0, carbs: 15, waterRatio: 0 },
+            { id: 'raisins', name: 'Изюм', category: 'FRUIT', baseWeight: 20, kcal: 65, protein: 1, fat: 0, carbs: 17, waterRatio: 0 }
+        ];
 
-            // Глобальные данные
-            let allDaysMeals = [];
-            let currentMembers = 4;
-            let lastUsedDay = new Map(); // для отслеживания повторов
-
-            // ---------- ФОН ----------
-            const bgLayer = document.getElementById('bgLayer');
-            const tripSelect = document.getElementById('tripType');
-
-            function updateBackground(type) {
-                bgLayer.className = 'background-layer';
-                bgLayer.classList.add(type);
+        const MEAL_TEMPLATES = {
+            breakfast: {
+                required: ['PORRIDGE', 'TEA', 'BREAD'],
+                optional: [
+                    { category: 'FRUIT', chance: 0.8 },
+                    { category: 'SWEET', chance: 0.6 },
+                    { category: 'SPREAD', chance: 0.9 }
+                ],
+                maxItems: 7
+            },
+            lunch: {
+                required: ['SOUP', 'GARNISH', 'PROTEIN', 'VEG', 'CONDIMENT'],
+                optional: [
+                    { category: 'SPREAD', chance: 0.7 },
+                    { category: 'SWEET', chance: 0.5 }
+                ],
+                maxItems: 10
+            },
+            dinner: {
+                required: ['GARNISH', 'PROTEIN', 'VEG', 'CONDIMENT'],
+                optional: [
+                    { category: 'SOUP', chance: 0.3 },
+                    { category: 'SPREAD', chance: 0.6 },
+                    { category: 'SWEET', chance: 0.4 }
+                ],
+                maxItems: 9
             }
-            tripSelect.addEventListener('change', (e) => updateBackground(e.target.value));
-            updateBackground(tripSelect.value);
+        };
 
-            // ---------- ПАНЕЛЬ ПРОДУКТОВ ----------
-            const productGrid = document.getElementById('productGrid');
-            function renderProductPanel() {
-                productGrid.innerHTML = '';
-                Object.keys(products).forEach(key => {
-                    const product = products[key];
-                    const card = document.createElement('div');
-                    card.className = 'product-card';
-                    card.innerHTML = `
-                        <span class="product-name">${product.name}</span>
-                        <div class="product-weight">
-                            <input type="number" value="${product.baseWeight}" step="1" min="0" data-product-key="${key}" class="weight-input">
-                            <span>г</span>
-                        </div>
-                    `;
-                    productGrid.appendChild(card);
-                });
+        // ==========================================
+        // STATE
+        // ==========================================
+        
+        let currentMenu = [];
+        let excludedProducts = new Set();
+        let lockedProducts = new Map();
+        let packagingMode = 'total';
+        let currentEdit = null;
+        let currentTripType = 'mountain';
+        let currentTextReport = '';
 
-                document.querySelectorAll('.weight-input').forEach(input => {
-                    input.addEventListener('change', function(e) {
-                        const key = this.dataset.productKey;
-                        const newWeight = parseInt(this.value, 10);
-                        if (!isNaN(newWeight) && newWeight >= 0) {
-                            products[key].baseWeight = newWeight;
-                        }
-                    });
-                });
-            }
+        // ==========================================
+        // INIT
+        // ==========================================
+        
+        function init() {
+            renderExcludeGrid();
+        }
 
-            // ---------- КОЭФФИЦИЕНТЫ ----------
-            function getLoadFactors(km, altitude, method) {
-                let baseFactor = 1.0;
-                if (km > 25) baseFactor += 0.1;
-                if (km > 35) baseFactor += 0.1;
-                if (method === 'fire') baseFactor += 0.05;
-
-                const altitudeFactor = altitude > 2000 ? 1.2 : 1.0;
-
-                return {
-                    garnish: baseFactor * (altitude > 2000 ? 0.9 : 1.0),
-                    protein: baseFactor * altitudeFactor,
-                    spread: baseFactor * altitudeFactor,
-                    porridge: baseFactor,
-                    milk: baseFactor,
-                    fruitNuts: baseFactor,
-                    bread: baseFactor,
-                    soup: baseFactor,
-                    condiment: baseFactor,
-                    tea: baseFactor,
-                    sugar: baseFactor,
-                    sweet: baseFactor,
-                    veg: baseFactor
-                };
-            }
-
-            function varyWeight(base, factor = 1.0) {
-                const variation = 0.85 + Math.random() * 0.3;
-                return Math.round(base * factor * variation);
-            }
-
-            // Функция выбора продукта с учётом истории (избегаем повторов подряд)
-            function selectProductFromList(list, usedNames, dayIndex, lastUsedMap, maxAttempts = 20) {
-                let available = list.filter(p => !usedNames.has(p.name));
-                if (available.length === 0) return null;
-
-                let candidates = available.filter(p => lastUsedMap.get(p.name) !== dayIndex - 1);
-                if (candidates.length > 0) {
-                    return candidates[Math.floor(Math.random() * candidates.length)];
-                }
-                return available[Math.floor(Math.random() * available.length)];
-            }
-
-            // ----- ФИКСИРОВАННЫЙ ПОРЯДОК ДЛЯ КАЖДОГО ПРИЁМА -----
-            const breakfastOrder = ['porridge','milk','fruitNuts','bread','spread','sweet','tea','sugar'];
-            const lunchOrder = ['soup','garnish','protein','veg','spread','condiment','bread','tea','sugar','sweet'];
-            const dinnerOrder = ['garnish','protein','veg','spread','condiment','bread','tea','sugar','sweet'];
-
-            function sortMealProducts(productsArray, order) {
-                return productsArray.sort((a, b) => {
-                    const ia = order.indexOf(a.category);
-                    const ib = order.indexOf(b.category);
-                    if (ia === -1 && ib === -1) return 0;
-                    if (ia === -1) return 1;
-                    if (ib === -1) return -1;
-                    return ia - ib;
-                });
-            }
-
-            // Генерация одного приёма с учётом дня
-            function generateMeal(mealType, factors, usedNames, dayIndex) {
-                const mealProducts = [];
-
-                function addProduct(product, categoryFactor, cat) {
-                    if (!product) return;
-                    const weight = varyWeight(product.baseWeight, factors[categoryFactor] || 1.0);
-                    mealProducts.push({
-                        name: product.name,
-                        weight: weight,
-                        category: cat || product.category
-                    });
-                    usedNames.add(product.name);
-                }
-
-                if (mealType === 'breakfast') {
-                    addProduct(products.bread, 'bread');
-                    addProduct(products.tea, 'tea');
-                    addProduct(products.sugar, 'sugar');
-                    const sweet = selectProductFromList(sweetsList, usedNames, dayIndex, lastUsedDay);
-                    addProduct(sweet, 'sweet');
-                    
-                    // Каша из специального списка
-                    const porridge = selectProductFromList(porridgesList, usedNames, dayIndex, lastUsedDay);
-                    addProduct(porridge, 'porridge');
-                    
-                    addProduct(products.milkPowder, 'milk');
-                    const addon = selectProductFromList(breakfastAddons, usedNames, dayIndex, lastUsedDay);
-                    addProduct(addon, 'fruitNuts');
-                    const cheeseSpread = selectProductFromList(spreadList, usedNames, dayIndex, lastUsedDay);
-                    addProduct(cheeseSpread, 'spread');
-
-                    return sortMealProducts(mealProducts, breakfastOrder);
-                }
-                else if (mealType === 'lunch') {
-                    addProduct(products.bread, 'bread');
-                    addProduct(products.tea, 'tea');
-                    addProduct(products.sugar, 'sugar');
-                    const sweet = selectProductFromList(sweetsList, usedNames, dayIndex, lastUsedDay);
-                    addProduct(sweet, 'sweet');
-
-                    const soup = selectProductFromList(soups, usedNames, dayIndex, lastUsedDay);
-                    addProduct(soup, 'soup');
-                    const garnish = selectProductFromList(garnishes, usedNames, dayIndex, lastUsedDay);
-                    addProduct(garnish, 'garnish');
-                    const protein = selectProductFromList(proteinList, usedNames, dayIndex, lastUsedDay);
-                    addProduct(protein, 'protein');
-                    const veg = selectProductFromList(subVegs, usedNames, dayIndex, lastUsedDay);
-                    addProduct(veg, 'veg');
-                    const spread = selectProductFromList(spreadList, usedNames, dayIndex, lastUsedDay);
-                    addProduct(spread, 'spread');
-                    
-                    // Добавляем обычную приправу (из condiments, без бульона)
-                    const condiment = selectProductFromList(condiments, usedNames, dayIndex, lastUsedDay);
-                    addProduct(condiment, 'condiment');
-                    
-                    // Добавляем бульон отдельно (гарантированно в каждом обеде)
-                    const broth = selectProductFromList(broths, usedNames, dayIndex, lastUsedDay);
-                    addProduct(broth, 'condiment');
-
-                    return sortMealProducts(mealProducts, lunchOrder);
-                }
-                else { // dinner
-                    addProduct(products.bread, 'bread');
-                    addProduct(products.tea, 'tea');
-                    addProduct(products.sugar, 'sugar');
-                    const sweet = selectProductFromList(sweetsList, usedNames, dayIndex, lastUsedDay);
-                    addProduct(sweet, 'sweet');
-
-                    let garnish = selectProductFromList(garnishes, usedNames, dayIndex, lastUsedDay);
-                    addProduct(garnish, 'garnish');
-                    const protein = selectProductFromList(proteinList, usedNames, dayIndex, lastUsedDay);
-                    addProduct(protein, 'protein');
-                    const veg = selectProductFromList(subVegs, usedNames, dayIndex, lastUsedDay);
-                    addProduct(veg, 'veg');
-                    if (Math.random() > 0.5) {
-                        const extra = selectProductFromList(spreadList, usedNames, dayIndex, lastUsedDay);
-                        addProduct(extra, 'spread');
-                    }
-                    // Приправа (без бульона – бульон только в обеде)
-                    const condiment = selectProductFromList(condiments, usedNames, dayIndex, lastUsedDay);
-                    addProduct(condiment, 'condiment');
-
-                    return sortMealProducts(mealProducts, dinnerOrder);
-                }
-            }
-
-            function generateRandomDay(factors, dayIndex) {
-                const usedNames = new Set();
-                const breakfast = generateMeal('breakfast', factors, usedNames, dayIndex);
-                const lunch = generateMeal('lunch', factors, usedNames, dayIndex);
-                const dinner = generateMeal('dinner', factors, usedNames, dayIndex);
-
-                // Обновляем карту последнего использования
-                const allProducts = [...breakfast, ...lunch, ...dinner];
-                allProducts.forEach(p => {
-                    lastUsedDay.set(p.name, dayIndex);
-                });
-
-                return {
-                    breakfast: breakfast,
-                    lunch: lunch,
-                    dinner: dinner,
-                    all: allProducts,
-                    factors: factors
-                };
-            }
-
-            // Замена продукта (без изменения истории)
-            function replaceProduct(dayIndex, mealType, productIndex, newProductKey) {
-                const day = allDaysMeals[dayIndex];
-                const newProd = products[newProductKey];
-                const factors = day.factors;
-                const category = newProd.category;
-                const factor = factors[category] || 1.0;
-                const newWeight = Math.round(newProd.baseWeight * factor);
-
-                day[mealType][productIndex] = {
-                    name: newProd.name,
-                    weight: newWeight,
-                    category: category
-                };
-
-                if (mealType === 'breakfast') {
-                    day[mealType] = sortMealProducts(day[mealType], breakfastOrder);
-                } else if (mealType === 'lunch') {
-                    day[mealType] = sortMealProducts(day[mealType], lunchOrder);
-                } else if (mealType === 'dinner') {
-                    day[mealType] = sortMealProducts(day[mealType], dinnerOrder);
-                }
-
-                day.all = [...day.breakfast, ...day.lunch, ...day.dinner];
-                renderAllDays();
-                updateTotalList();
-            }
-
-            // Рендер дней
-            function renderAllDays() {
-                const menuGrid = document.getElementById('menuGrid');
-                menuGrid.innerHTML = '';
-
-                allDaysMeals.forEach((day, idx) => {
-                    const card = document.createElement('div');
-                    card.className = 'day-card';
-                    card.innerHTML = `<h3>День ${idx+1}</h3>`;
-
-                    card.appendChild(createMealBlock('🌄 Завтрак', 'breakfast', day.breakfast, idx));
-                    card.appendChild(createMealBlock('☀️ Обед', 'lunch', day.lunch, idx));
-                    card.appendChild(createMealBlock('🌙 Ужин', 'dinner', day.dinner, idx));
-
-                    menuGrid.appendChild(card);
-                });
-            }
-
-            function createMealBlock(title, mealType, productsList, dayIndex) {
-                const block = document.createElement('div');
-                block.className = 'meal-block';
-                block.innerHTML = `<div class="meal-title">${title}</div>`;
-
-                productsList.forEach((prod, prodIdx) => {
-                    const item = document.createElement('div');
-                    item.className = 'product-item';
-                    item.innerHTML = `
-                        <div class="product-info">
-                            <span class="product-name">${prod.name}</span>
-                            <span class="product-weight">${prod.weight} г</span>
-                        </div>
-                        <button class="edit-btn" data-day="${dayIndex}" data-meal="${mealType}" data-index="${prodIdx}">✎</button>
-                    `;
-                    block.appendChild(item);
-                });
-
-                return block;
-            }
-
-            function updateTotalList() {
-                const members = parseInt(document.getElementById('membersCount').value) || 4;
-                const totalMap = new Map();
-
-                allDaysMeals.forEach(day => {
-                    day.all.forEach(product => {
-                        const name = product.name;
-                        const weightPerPerson = product.weight;
-                        const totalWeight = weightPerPerson * members;
-                        totalMap.set(name, (totalMap.get(name) || 0) + totalWeight);
-                    });
-                });
-
-                // Добавляем соль и специи, если их не было (как запас)
-                if (!totalMap.has('Соль')) totalMap.set('Соль', 3 * members * allDaysMeals.length);
-                if (!totalMap.has('Специи (смесь)')) totalMap.set('Специи (смесь)', 2 * members * allDaysMeals.length);
-
-                const sortedNames = Array.from(totalMap.keys()).sort((a,b) => a.localeCompare(b, 'ru'));
-                const totalListDiv = document.getElementById('totalList');
-                totalListDiv.innerHTML = '';
-                sortedNames.forEach(name => {
-                    const weight = Math.round(totalMap.get(name));
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'total-item';
-                    itemDiv.innerHTML = `${name} <span class="gram">${weight} г</span>`;
-                    totalListDiv.appendChild(itemDiv);
-                });
-
-                document.getElementById('totalSection').style.display = 'block';
-            }
-
-            function generateAndRender() {
-                const days = parseInt(document.getElementById('daysCount').value) || 7;
-                currentMembers = parseInt(document.getElementById('membersCount').value) || 4;
-                const km = parseFloat(document.getElementById('kmPerDay').value) || 20;
-                const altitude = parseFloat(document.getElementById('altitude').value) || 1000;
-                const method = document.getElementById('cookingMethod').value;
-
-                const factors = getLoadFactors(km, altitude, method);
-                document.getElementById('typeHint').innerHTML = `🏔️ Коррекция: углеводы ${Math.round(factors.garnish*100)}%, белки ${Math.round(factors.protein*100)}%, жиры ${Math.round(factors.spread*100)}%.`;
-
-                // Сбрасываем историю при новой генерации
-                lastUsedDay.clear();
-                allDaysMeals = [];
-                for (let i = 0; i < days; i++) {
-                    allDaysMeals.push(generateRandomDay(factors, i));
-                }
-
-                renderAllDays();
-                updateTotalList();
-            }
-
-            // Обработка замены продукта
-            document.addEventListener('click', (e) => {
-                if (e.target.classList.contains('edit-btn')) {
-                    e.preventDefault();
-                    const btn = e.target;
-                    const dayIndex = parseInt(btn.dataset.day);
-                    const mealType = btn.dataset.meal;
-                    const prodIndex = parseInt(btn.dataset.index);
-
-                    const select = document.createElement('select');
-                    select.className = 'temp-select';
-                    Object.keys(products).forEach(key => {
-                        const opt = document.createElement('option');
-                        opt.value = key;
-                        opt.textContent = products[key].name;
-                        select.appendChild(opt);
-                    });
-
-                    const rect = btn.getBoundingClientRect();
-                    select.style.left = rect.left + 'px';
-                    select.style.top = (rect.bottom + 5) + 'px';
-
-                    const handleSelect = () => {
-                        const newKey = select.value;
-                        replaceProduct(dayIndex, mealType, prodIndex, newKey);
-                        if (document.body.contains(select)) document.body.removeChild(select);
-                    };
-
-                    select.addEventListener('change', handleSelect);
-
-                    setTimeout(() => {
-                        const closeOnClickOutside = (event) => {
-                            if (!select.contains(event.target) && event.target !== btn) {
-                                if (document.body.contains(select)) {
-                                    document.body.removeChild(select);
-                                }
-                                document.removeEventListener('click', closeOnClickOutside);
-                            }
-                        };
-                        document.addEventListener('click', closeOnClickOutside);
-                    }, 10);
-
-                    document.body.appendChild(select);
-                    select.focus();
-                }
+        function renderExcludeGrid() {
+            const grid = document.getElementById('excludeGrid');
+            const byCategory = {};
+            
+            PRODUCTS.forEach(p => {
+                if (!byCategory[p.category]) byCategory[p.category] = [];
+                byCategory[p.category].push(p);
             });
 
-            // Управление панелью
-            const panel = document.getElementById('productPanel');
-            const overlay = document.getElementById('overlay');
-            const menuToggle = document.getElementById('menuToggle');
-            const closePanel = document.getElementById('closePanel');
+            Object.entries(byCategory).forEach(([cat, items]) => {
+                items.forEach(p => {
+                    const div = document.createElement('div');
+                    div.className = 'checkbox-item';
+                    div.innerHTML = `
+                        <input type="checkbox" id="ex_${p.id}" value="${p.id}" onchange="toggleExclude('${p.id}')">
+                        <label for="ex_${p.id}">${CATEGORIES[p.category].icon} ${p.name}</label>
+                    `;
+                    grid.appendChild(div);
+                });
+            });
+        }
 
-            function openPanel() {
-                panel.classList.add('open');
-                overlay.classList.add('show');
-            }
-            function closePanelFn() {
-                panel.classList.remove('open');
-                overlay.classList.remove('show');
-            }
-
-            menuToggle.addEventListener('click', openPanel);
-            closePanel.addEventListener('click', closePanelFn);
-            overlay.addEventListener('click', closePanelFn);
-
-            // ---------- ПЕРЕКЛЮЧЕНИЕ МЕЖДУ ДЕСКТОПНОЙ И МОБИЛЬНОЙ ВЕРСИЯМИ ----------
-            const desktopBtn = document.getElementById('desktopView');
-            const mobileBtn = document.getElementById('mobileView');
-
-            function setDesktop() {
-                document.body.classList.remove('mobile-layout');
-                localStorage.setItem('backpackRationLayout', 'desktop');
-            }
-            function setMobile() {
-                document.body.classList.add('mobile-layout');
-                localStorage.setItem('backpackRationLayout', 'mobile');
-            }
-
-            desktopBtn.addEventListener('click', setDesktop);
-            mobileBtn.addEventListener('click', setMobile);
-
-            // Восстанавливаем сохранённый выбор
-            const savedLayout = localStorage.getItem('backpackRationLayout');
-            if (savedLayout === 'mobile') {
-                setMobile();
+        function toggleExclude(id) {
+            if (excludedProducts.has(id)) {
+                excludedProducts.delete(id);
             } else {
-                setDesktop(); // по умолчанию десктоп
+                excludedProducts.add(id);
             }
+        }
 
-            // Инициализация
-            renderProductPanel();
-            generateAndRender();
+        // ==========================================
+        // TRIP TYPE SELECTOR
+        // ==========================================
+        
+        function setTripType(type) {
+            currentTripType = type;
+            document.querySelectorAll('.trip-type-card').forEach(card => card.classList.remove('active'));
+            document.getElementById(type + 'Card').classList.add('active');
+            
+            document.getElementById('mountainInfo').style.display = type === 'mountain' ? 'block' : 'none';
+            document.getElementById('waterInfo').style.display = type === 'water' ? 'block' : 'none';
+        }
 
-            document.getElementById('generateBtn').addEventListener('click', generateAndRender);
-        })();
+        // ==========================================
+        // GENERATION LOGIC
+        // ==========================================
+        
+        function getLoadFactors(km, elevationGain, maxAltitude, temp, method, difficulty) {
+            let factor = 1.0;
+            let fatFactor = 1.0;
+            let carbFactor = 1.0;
+            let proteinFactor = 1.0;
+            
+            // Base factors by trip type
+            if (currentTripType === 'mountain') {
+                // Mountain: more carbs, less fat (harder to digest at altitude) [^3^][^4^]
+                fatFactor = 0.85;
+                carbFactor = 1.15;
+                
+                // Elevation gain impact
+                if (elevationGain > 300) factor += 0.1;
+                if (elevationGain > 600) factor += 0.15;
+                if (elevationGain > 1000) factor += 0.2;
+                
+                // Max altitude impact
+                if (maxAltitude > 1500) factor += 0.1;
+                if (maxAltitude > 2500) {
+                    factor += 0.15;
+                    fatFactor = 0.75; // Even less fat at high altitude
+                    carbFactor = 1.25;
+                }
+                if (maxAltitude > 3500) {
+                    factor += 0.2;
+                    fatFactor = 0.7;
+                    carbFactor = 1.3;
+                }
+            } else {
+                // Water trip: standard BJU ratio [^1^]
+                fatFactor = 1.0;
+                carbFactor = 1.0;
+                proteinFactor = 1.0;
+            }
+            
+            // Distance
+            if (km > 15) factor += 0.1;
+            if (km > 25) factor += 0.15;
+            if (km > 35) factor += 0.15;
+            
+            // Temperature
+            const tempMultipliers = {
+                hot: 0.95,
+                normal: 1.0,
+                cold: 1.15,
+                frost: 1.3
+            };
+            factor *= tempMultipliers[temp] || 1.0;
+            
+            // Cooking method
+            if (method === 'fire') factor += 0.05;
+            
+            // Difficulty
+            const diffMultipliers = {
+                easy: 0.9,
+                medium: 1.0,
+                hard: 1.15,
+                extreme: 1.3
+            };
+            factor *= diffMultipliers[difficulty] || 1.0;
+            
+            return {
+                base: factor,
+                protein: factor * proteinFactor * 1.1,
+                carb: factor * carbFactor * 0.95,
+                fat: factor * fatFactor
+            };
+        }
+
+        function getAcclimatizationFactor(dayIndex, totalDays) {
+            // First 2-3 days lower calories for acclimatization [^3^]
+            if (currentTripType === 'mountain' && dayIndex < 3) {
+                return 0.85; // 15% less for first 3 days
+            }
+            return 1.0;
+        }
+
+        function getAvailableProducts(category, usedInDay) {
+            return PRODUCTS.filter(p => 
+                p.category === category &&
+                !excludedProducts.has(p.id) &&
+                !usedInDay.has(p.id)
+            );
+        }
+
+        function selectProduct(category, usedInDay, factors, lockedId = null, isHighAltitude = false) {
+            if (lockedId) {
+                return PRODUCTS.find(p => p.id === lockedId);
+            }
+            
+            let available = getAvailableProducts(category, usedInDay);
+            
+            // At high altitude, prefer lighter products (less fat) [^3^]
+            if (isHighAltitude && currentTripType === 'mountain') {
+                available = available.filter(p => p.fat < 10);
+                if (available.length === 0) available = getAvailableProducts(category, usedInDay);
+            }
+            
+            if (available.length === 0) {
+                return PRODUCTS.find(p => p.category === category && !excludedProducts.has(p.id));
+            }
+            
+            const weighted = available.map(p => ({
+                product: p,
+                weight: p.kcal * (0.8 + Math.random() * 0.4)
+            }));
+            
+            weighted.sort((a, b) => b.weight - a.weight);
+            const top3 = weighted.slice(0, Math.min(3, weighted.length));
+            return top3[Math.floor(Math.random() * top3.length)].product;
+        }
+
+        function calculateWeight(product, factors, dayIndex) {
+            const acclimFactor = getAcclimatizationFactor(dayIndex, currentMenu.length || 5);
+            const factor = product.category === 'PROTEIN' ? factors.protein : 
+                          product.category === 'GARNISH' ? factors.carb : 
+                          product.category === 'SWEET' || product.category === 'FRUIT' ? factors.carb : 
+                          product.category === 'CONDIMENT' && product.fat > 10 ? factors.fat : factors.base;
+            return Math.round(product.baseWeight * factor * acclimFactor);
+        }
+
+        function calculateProductKBZH(product, weight) {
+            const ratio = weight / product.baseWeight;
+            return {
+                kcal: Math.round(product.kcal * ratio),
+                protein: Math.round(product.protein * ratio * 10) / 10,
+                fat: Math.round(product.fat * ratio * 10) / 10,
+                carbs: Math.round(product.carbs * ratio * 10) / 10
+            };
+        }
+
+        function generateMeal(type, factors, dayIndex, usedInDay, maxAltitude) {
+            const template = MEAL_TEMPLATES[type];
+            const products = [];
+            const isHighAltitude = maxAltitude > 2500;
+            
+            template.required.forEach(cat => {
+                const key = `${dayIndex}-${type}-${products.length}`;
+                const lockedId = lockedProducts.get(key);
+                const prod = selectProduct(cat, usedInDay, factors, lockedId, isHighAltitude);
+                if (prod) {
+                    const weight = calculateWeight(prod, factors, dayIndex);
+                    products.push({ ...prod, weight, locked: !!lockedId });
+                    usedInDay.add(prod.id);
+                }
+            });
+            
+            template.optional.forEach(opt => {
+                if (products.length >= template.maxItems) return;
+                if (Math.random() < opt.chance) {
+                    const key = `${dayIndex}-${type}-${products.length}`;
+                    const lockedId = lockedProducts.get(key);
+                    const prod = selectProduct(opt.category, usedInDay, factors, lockedId, isHighAltitude);
+                    if (prod) {
+                        const weight = calculateWeight(prod, factors, dayIndex);
+                        products.push({ ...prod, weight, locked: !!lockedId });
+                        usedInDay.add(prod.id);
+                    }
+                }
+            });
+            
+            return products.sort((a, b) => 
+                CATEGORIES[a.category].order - CATEGORIES[b.category].order
+            );
+        }
+
+        function generateMenu() {
+            const days = parseInt(document.getElementById('daysCount').value) || 5;
+            const km = parseInt(document.getElementById('kmPerDay').value) || 20;
+            const elevationGain = parseInt(document.getElementById('elevationGain').value) || 500;
+            const maxAltitude = parseInt(document.getElementById('maxAltitude').value) || 1500;
+            const temp = document.getElementById('temperature').value;
+            const method = document.getElementById('cookingMethod').value;
+            const difficulty = document.getElementById('difficulty').value;
+            
+            const factors = getLoadFactors(km, elevationGain, maxAltitude, temp, method, difficulty);
+            currentMenu = [];
+            
+            for (let i = 0; i < days; i++) {
+                const usedInDay = new Set();
+                const breakfast = generateMeal('breakfast', factors, i, usedInDay, maxAltitude);
+                const lunch = generateMeal('lunch', factors, i, usedInDay, maxAltitude);
+                const dinner = generateMeal('dinner', factors, i, usedInDay, maxAltitude);
+                
+                currentMenu.push({
+                    day: i + 1,
+                    breakfast,
+                    lunch,
+                    dinner,
+                    all: [...breakfast, ...lunch, ...dinner]
+                });
+            }
+            
+            renderMenu();
+            renderSummaryKBZH();
+            renderWaterSection();
+            renderTotalSection();
+            
+            showNotification('✅ Меню сгенерировано!');
+        }
+
+        // ==========================================
+        // RENDERING
+        // ==========================================
+        
+        function renderMenu() {
+            const container = document.getElementById('daysContainer');
+            container.innerHTML = '';
+            
+            currentMenu.forEach((day, idx) => {
+                const card = document.createElement('div');
+                card.className = 'day-card';
+                card.style.animationDelay = `${idx * 0.1}s`;
+                
+                const dayStats = calculateDayStats(day.all);
+                const isAcclimDay = currentTripType === 'mountain' && idx < 3;
+                
+                card.innerHTML = `
+                    <div class="day-header">
+                        <div class="day-title-section">
+                            <div class="day-title">📅 День ${day.day} ${isAcclimDay ? '<span style="font-size:0.8rem;color:#e74c3c;">(акклиматизация)</span>' : ''}</div>
+                            <div class="day-total-kbzh">
+                                <span class="day-stat-pill calories">🔥 ${dayStats.kcal}</span>
+                                <span class="day-stat-pill protein">🥩 ${dayStats.protein}г</span>
+                                <span class="day-stat-pill fat">🥑 ${dayStats.fat}г</span>
+                                <span class="day-stat-pill carbs">🍚 ${dayStats.carbs}г</span>
+                            </div>
+                        </div>
+                        <div class="day-weight">⚖️ ${dayStats.weight}г</div>
+                    </div>
+                    ${renderMealSection('🌅 Завтрак', 'breakfast', day.breakfast, idx)}
+                    ${renderMealSection('☀️ Обед', 'lunch', day.lunch, idx)}
+                    ${renderMealSection('🌙 Ужин', 'dinner', day.dinner, idx)}
+                    ${renderDaySummary(day.all)}
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function renderMealSection(title, type, products, dayIdx) {
+            const stats = calculateMealStats(products);
+            
+            return `
+                <div class="meal-section">
+                    <div class="meal-header">
+                        <div class="meal-title-group">
+                            <div class="meal-title">${title}</div>
+                            <div class="meal-kbzh-mini">
+                                <span class="kbzh-mini-pill calories">${stats.kcal}</span>
+                                <span class="kbzh-mini-pill protein">${stats.protein}г</span>
+                                <span class="kbzh-mini-pill fat">${stats.fat}г</span>
+                                <span class="kbzh-mini-pill carbs">${stats.carbs}г</span>
+                            </div>
+                        </div>
+                        <div class="meal-calories-badge">${stats.weight}г</div>
+                    </div>
+                    <div class="product-list">
+                        ${products.map((p, i) => renderProductItem(p, dayIdx, type, i)).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProductItem(product, dayIdx, mealType, idx) {
+            const cat = CATEGORIES[product.category];
+            const key = `${dayIdx}-${mealType}-${idx}`;
+            const isLocked = product.locked;
+            const kbzh = calculateProductKBZH(product, product.weight);
+            
+            return `
+                <div class="product-item ${isLocked ? 'locked' : ''}" data-key="${key}">
+                    <div class="product-info">
+                        <div class="product-icon ${cat.color}">${cat.icon}</div>
+                        <div class="product-details">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-kbzh">
+                                <span class="kbzh-tag protein">🥩 ${kbzh.protein}г</span>
+                                <span class="kbzh-tag fat">🥑 ${kbzh.fat}г</span>
+                                <span class="kbzh-tag carbs">🍚 ${kbzh.carbs}г</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-weight-box">
+                        <div class="product-weight">${product.weight}г</div>
+                        <div class="product-cal">${kbzh.kcal} ккал</div>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn-icon lock" onclick="toggleLock('${key}', '${product.id}')" title="${isLocked ? 'Разблокировать' : 'Зафиксировать'}">
+                            ${isLocked ? '🔒' : '🔓'}
+                        </button>
+                        <button class="btn-icon edit" onclick="openReplaceModal(${dayIdx}, '${mealType}', ${idx}, '${product.category}')" title="Заменить">
+                            ✎
+                        </button>
+                        <button class="btn-icon delete" onclick="removeProduct(${dayIdx}, '${mealType}', ${idx})" title="Удалить">
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderDaySummary(products) {
+            const stats = calculateDayStats(products);
+            const totalMacros = stats.protein + stats.fat + stats.carbs;
+            const pPct = totalMacros > 0 ? Math.round(stats.protein / totalMacros * 100) : 0;
+            const fPct = totalMacros > 0 ? Math.round(stats.fat / totalMacros * 100) : 0;
+            const cPct = totalMacros > 0 ? Math.round(stats.carbs / totalMacros * 100) : 0;
+            
+            return `
+                <div class="day-summary-section">
+                    <div class="day-summary-title">
+                        📊 Итого за день
+                    </div>
+                    <div class="day-kbzh-grid">
+                        <div class="day-kbzh-item">
+                            <div class="day-kbzh-value calories">${stats.kcal}</div>
+                            <div class="day-kbzh-label">Калории</div>
+                        </div>
+                        <div class="day-kbzh-item">
+                            <div class="day-kbzh-value protein">${stats.protein}г</div>
+                            <div class="day-kbzh-label">Белки</div>
+                            <span class="day-kbzh-percent protein">${pPct}%</span>
+                        </div>
+                        <div class="day-kbzh-item">
+                            <div class="day-kbzh-value fat">${stats.fat}г</div>
+                            <div class="day-kbzh-label">Жиры</div>
+                            <span class="day-kbzh-percent fat">${fPct}%</span>
+                        </div>
+                        <div class="day-kbzh-item">
+                            <div class="day-kbzh-value carbs">${stats.carbs}г</div>
+                            <div class="day-kbzh-label">Углеводы</div>
+                            <span class="day-kbzh-percent carbs">${cPct}%</span>
+                        </div>
+                    </div>
+                    <div class="macro-chart">
+                        <div class="macro-segment protein" style="width: ${pPct}%">${pPct > 10 ? pPct + '%' : ''}</div>
+                        <div class="macro-segment fat" style="width: ${fPct}%">${fPct > 10 ? fPct + '%' : ''}</div>
+                        <div class="macro-segment carbs" style="width: ${cPct}%">${cPct > 10 ? cPct + '%' : ''}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function calculateMealStats(products) {
+            return products.reduce((acc, p) => {
+                const kbzh = calculateProductKBZH(p, p.weight);
+                return {
+                    kcal: acc.kcal + kbzh.kcal,
+                    protein: Math.round((acc.protein + kbzh.protein) * 10) / 10,
+                    fat: Math.round((acc.fat + kbzh.fat) * 10) / 10,
+                    carbs: Math.round((acc.carbs + kbzh.carbs) * 10) / 10,
+                    weight: acc.weight + p.weight
+                };
+            }, { kcal: 0, protein: 0, fat: 0, carbs: 0, weight: 0 });
+        }
+
+        function calculateDayStats(products) {
+            return products.reduce((acc, p) => {
+                const kbzh = calculateProductKBZH(p, p.weight);
+                return {
+                    kcal: acc.kcal + kbzh.kcal,
+                    protein: Math.round((acc.protein + kbzh.protein) * 10) / 10,
+                    fat: Math.round((acc.fat + kbzh.fat) * 10) / 10,
+                    carbs: Math.round((acc.carbs + kbzh.carbs) * 10) / 10,
+                    weight: acc.weight + p.weight
+                };
+            }, { kcal: 0, protein: 0, fat: 0, carbs: 0, weight: 0 });
+        }
+
+        function renderSummaryKBZH() {
+            const members = parseInt(document.getElementById('membersCount').value) || 4;
+            const days = currentMenu.length;
+            
+            const totals = currentMenu.reduce((acc, day) => {
+                const stats = calculateDayStats(day.all);
+                return {
+                    kcal: acc.kcal + stats.kcal,
+                    protein: acc.protein + stats.protein,
+                    fat: acc.fat + stats.fat,
+                    carbs: acc.carbs + stats.carbs
+                };
+            }, { kcal: 0, protein: 0, fat: 0, carbs: 0 });
+            
+            const avg = {
+                kcal: Math.round(totals.kcal / days),
+                protein: Math.round(totals.protein / days * 10) / 10,
+                fat: Math.round(totals.fat / days * 10) / 10,
+                carbs: Math.round(totals.carbs / days * 10) / 10
+            };
+            
+            const totalMacros = avg.protein + avg.fat + avg.carbs;
+            const pPct = totalMacros > 0 ? Math.round(avg.protein / totalMacros * 100) : 0;
+            const fPct = totalMacros > 0 ? Math.round(avg.fat / totalMacros * 100) : 0;
+            const cPct = totalMacros > 0 ? Math.round(avg.carbs / totalMacros * 100) : 0;
+            
+            document.getElementById('kbzhSummary').style.display = 'grid';
+            document.getElementById('sumCalories').textContent = avg.kcal;
+            document.getElementById('sumProtein').textContent = avg.protein + 'г';
+            document.getElementById('sumFat').textContent = avg.fat + 'г';
+            document.getElementById('sumCarbs').textContent = avg.carbs + 'г';
+            
+            document.getElementById('calBar').style.width = Math.min(avg.kcal / 40, 100) + '%';
+            document.getElementById('proteinBar').style.width = Math.min(avg.protein / 1.5, 100) + '%';
+            document.getElementById('fatBar').style.width = Math.min(avg.fat, 100) + '%';
+            document.getElementById('carbsBar').style.width = Math.min(avg.carbs / 4, 100) + '%';
+            
+            document.getElementById('calPercent').textContent = 'норма';
+            document.getElementById('proteinPercent').textContent = pPct + '%';
+            document.getElementById('fatPercent').textContent = fPct + '%';
+            document.getElementById('carbsPercent').textContent = cPct + '%';
+        }
+
+        function renderWaterSection() {
+            const section = document.getElementById('waterSection');
+            const grid = document.getElementById('waterGrid');
+            const members = parseInt(document.getElementById('membersCount').value) || 4;
+            
+            const byDay = currentMenu.map(day => {
+                const water = day.all.reduce((sum, p) => 
+                    sum + (p.waterRatio ? p.weight * p.waterRatio / 1000 : 0), 0
+                );
+                return { day: day.day, water: (water * members).toFixed(1) };
+            });
+            
+            const maxWater = Math.max(...byDay.map(d => parseFloat(d.water)));
+            
+            grid.innerHTML = byDay.map(d => `
+                <div class="water-card">
+                    <div class="water-amount">${d.water}л</div>
+                    <div class="water-label">День ${d.day} (готовка)</div>
+                    <div class="stat-bar" style="margin-top: 10px; background: rgba(255,255,255,0.2);">
+                        <div class="stat-bar-fill" style="width: ${d.water / maxWater * 100}%; background: white;"></div>
+                    </div>
+                </div>
+            `).join('');
+            
+            section.style.display = 'block';
+        }
+
+        function renderTotalSection() {
+            const section = document.getElementById('totalSection');
+            section.style.display = 'block';
+            renderTotalGrid();
+        }
+
+        function renderTotalGrid() {
+            const members = parseInt(document.getElementById('membersCount').value) || 4;
+            const grid = document.getElementById('totalGrid');
+            
+            const totals = new Map();
+            
+            currentMenu.forEach(day => {
+                day.all.forEach(p => {
+                    const existing = totals.get(p.id) || { ...p, totalWeight: 0, days: [], totalKcal: 0, totalProtein: 0, totalFat: 0, totalCarbs: 0 };
+                    const kbzh = calculateProductKBZH(p, p.weight * members);
+                    existing.totalWeight += p.weight * members;
+                    existing.totalKcal += kbzh.kcal;
+                    existing.totalProtein += kbzh.protein;
+                    existing.totalFat += kbzh.fat;
+                    existing.totalCarbs += kbzh.carbs;
+                    if (!existing.days.includes(day.day)) existing.days.push(day.day);
+                    totals.set(p.id, existing);
+                });
+            });
+            
+            const sorted = Array.from(totals.values()).sort((a, b) => b.totalWeight - a.totalWeight);
+            
+            grid.innerHTML = sorted.map(item => {
+                const packSize = packagingMode === 'packs' ? calculatePackSize(item) : null;
+                
+                return `
+                    <div class="total-item ${packagingMode !== 'total' ? 'packaged' : ''}">
+                        <div class="total-info">
+                            <div class="total-name">${CATEGORIES[item.category].icon} ${item.name}</div>
+                            <div class="total-detail">
+                                ${packagingMode === 'daily' ? `Дни: ${item.days.join(', ')}` : ''}
+                                ${packagingMode === 'packs' ? `${packSize.packs} пакетов по ${packSize.size}г` : ''}
+                                ${packagingMode === 'total' ? `🔥 ${Math.round(item.totalKcal)} ккал · 🥩 ${Math.round(item.totalProtein)}г · 🥑 ${Math.round(item.totalFat)}г · 🍚 ${Math.round(item.totalCarbs)}г` : ''}
+                            </div>
+                        </div>
+                        <div class="total-weight">${Math.round(item.totalWeight)}г</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function calculatePackSize(item) {
+            const days = item.days.length;
+            const total = item.totalWeight;
+            const idealPack = 100;
+            
+            const packs = Math.max(1, Math.round(total / idealPack / days) * days);
+            const size = Math.round(total / packs);
+            
+            return { packs, size };
+        }
+
+        // ==========================================
+        // TEXT EXPORT / PDF
+        // ==========================================
+        
+        function generateTextReport() {
+            const members = parseInt(document.getElementById('membersCount').value) || 4;
+            const days = currentMenu.length;
+            const km = document.getElementById('kmPerDay').value;
+            const elevationGain = document.getElementById('elevationGain').value;
+            const maxAltitude = document.getElementById('maxAltitude').value;
+            const temp = document.getElementById('temperature').value;
+            const method = document.getElementById('cookingMethod').value;
+            const difficulty = document.getElementById('difficulty').value;
+            
+            const tempNames = {
+                hot: 'Жарко (+25°C и выше)',
+                normal: 'Норма (+10 до +25°C)',
+                cold: 'Холодно (0 до +10°C)',
+                frost: 'Мороз (ниже 0°C)'
+            };
+            
+            const diffNames = {
+                easy: 'Лёгкая (ПВД, 1 к.с.)',
+                medium: 'Средняя (2-3 к.с.)',
+                hard: 'Сложная (4-5 к.с.)',
+                extreme: 'Экстремальная (6 к.с.)'
+            };
+            
+            let report = '';
+            report += '╔══════════════════════════════════════════════════════════════════╗\n';
+            report += '║           BACKPACKRATION PRO - ПОХОДНОЕ МЕНЮ                      ║\n';
+            report += '╚══════════════════════════════════════════════════════════════════╝\n\n';
+            
+            report += `📅 Дата создания: ${new Date().toLocaleDateString('ru-RU')}\n`;
+            report += `🗺️ Тип похода: ${currentTripType === 'mountain' ? '⛰️ Горный' : '🌊 Водный'}\n`;
+            report += `👥 Участников: ${members} чел.\n`;
+            report += `📆 Дней в походе: ${days}\n`;
+            report += `🚶 Км/день: ${km}\n`;
+            report += `📈 Средний набор высоты: ${elevationGain} м/день\n`;
+            report += `⛰️ Максимальная высота: ${maxAltitude} м\n`;
+            report += `🌡️ Температура: ${tempNames[temp]}\n`;
+            report += `🔥 Способ готовки: ${method === 'gas' ? 'Газовая горелка' : 'Костёр'}\n`;
+            report += `📊 Сложность: ${diffNames[difficulty]}\n\n`;
+            
+            if (currentTripType === 'mountain') {
+                report += '⚠️ ОСОБЕННОСТИ ГОРНОГО ПИТАНИЯ:\n';
+                report += '• Жиры снижены (хуже усваиваются на высоте) [^3^]\n';
+                report += '• Углеводы повышены (быстрое восстановление энергии) [^4^]\n';
+                if (elevationGain > 1000) report += '• Высокий набор: +15-20% калорий [^2^]\n';
+                if (maxAltitude > 2500) report += '• Высота >2500м: ещё меньше жиров, больше углеводов [^3^]\n';
+                report += '• Первые 3 дня: пониженная калорийность (акклиматизация) [^3^]\n\n';
+            } else {
+                report += '🚣 ОСОБЕННОСТИ ВОДНОГО ПИТАНИЯ:\n';
+                report += '• Стандартное соотношение БЖУ [^1^]\n';
+                report += '• Возможность свежих овощей при наличии баз [^5^]\n';
+                report += '• Меньше сублимированных продуктов [^5^]\n\n';
+            }
+            
+            // Summary
+            const totals = currentMenu.reduce((acc, day) => {
+                const stats = calculateDayStats(day.all);
+                return {
+                    kcal: acc.kcal + stats.kcal,
+                    protein: acc.protein + stats.protein,
+                    fat: acc.fat + stats.fat,
+                    carbs: acc.carbs + stats.carbs,
+                    weight: acc.weight + stats.weight
+                };
+            }, { kcal: 0, protein: 0, fat: 0, carbs: 0, weight: 0 });
+            
+            report += '═══════════════════════════════════════════════════════════════════\n';
+            report += '                        📊 ОБЩАЯ СВОДКА\n';
+            report += '═══════════════════════════════════════════════════════════════════\n\n';
+            
+            report += `🔥 Калории в день: ${Math.round(totals.kcal / days)} ккал\n`;
+            report += `🥩 Белки в день: ${Math.round(totals.protein / days * 10) / 10} г\n`;
+            report += `🥑 Жиры в день: ${Math.round(totals.fat / days * 10) / 10} г\n`;
+            report += `🍚 Углеводы в день: ${Math.round(totals.carbs / days * 10) / 10} г\n`;
+            report += `⚖️ Вес на человека: ${Math.round(totals.weight / days)} г/день\n`;
+            report += `📦 Общий вес продуктов: ${Math.round(totals.weight * members / 1000 * 10) / 10} кг\n\n`;
+            
+            // Water
+            const totalWater = currentMenu.reduce((sum, day) => {
+                return sum + day.all.reduce((dSum, p) => 
+                    dSum + (p.waterRatio ? p.weight * p.waterRatio / 1000 : 0), 0);
+            }, 0) * members;
+            
+            report += `💧 Вода на готовку: ${totalWater.toFixed(1)} л (всего)\n\n`;
+            
+            // Days detail
+            currentMenu.forEach(day => {
+                const isAcclimDay = currentTripType === 'mountain' && day.day <= 3;
+                report += '═══════════════════════════════════════════════════════════════════\n';
+                report += `                        📅 ДЕНЬ ${day.day}${isAcclimDay ? ' (АККЛИМАТИЗАЦИЯ)' : ''}\n`;
+                report += '═══════════════════════════════════════════════════════════════════\n\n';
+                
+                const dayStats = calculateDayStats(day.all);
+                report += `Итого: 🔥 ${dayStats.kcal} ккал | 🥩 ${dayStats.protein}г | 🥑 ${dayStats.fat}г | 🍚 ${dayStats.carbs}г | ⚖️ ${dayStats.weight}г\n\n`;
+                
+                // Breakfast
+                report += '┌─────────────────────────────────────────────────────────────────┐\n';
+                report += '│ 🌅 ЗАВТРАК                                                      │\n';
+                report += '└─────────────────────────────────────────────────────────────────┘\n';
+                const bStats = calculateMealStats(day.breakfast);
+                report += `    Итого: 🔥 ${bStats.kcal} ккал | 🥩 ${bStats.protein}г | 🥑 ${bStats.fat}г | 🍚 ${bStats.carbs}г | ⚖️ ${bStats.weight}г\n\n`;
+                day.breakfast.forEach(p => {
+                    const k = calculateProductKBZH(p, p.weight);
+                    report += `    • ${p.name.padEnd(30)} ${p.weight}г  |  🔥${k.kcal}  🥩${k.protein}г  🥑${k.fat}г  🍚${k.carbs}г\n`;
+                });
+                report += '\n';
+                
+                // Lunch
+                report += '┌─────────────────────────────────────────────────────────────────┐\n';
+                report += '│ ☀️ ОБЕД                                                         │\n';
+                report += '└─────────────────────────────────────────────────────────────────┘\n';
+                const lStats = calculateMealStats(day.lunch);
+                report += `    Итого: 🔥 ${lStats.kcal} ккал | 🥩 ${lStats.protein}г | 🥑 ${lStats.fat}г | 🍚 ${lStats.carbs}г | ⚖️ ${lStats.weight}г\n\n`;
+                day.lunch.forEach(p => {
+                    const k = calculateProductKBZH(p, p.weight);
+                    report += `    • ${p.name.padEnd(30)} ${p.weight}г  |  🔥${k.kcal}  🥩${k.protein}г  🥑${k.fat}г  🍚${k.carbs}г\n`;
+                });
+                report += '\n';
+                
+                // Dinner
+                report += '┌─────────────────────────────────────────────────────────────────┐\n';
+                report += '│ 🌙 УЖИН                                                         │\n';
+                report += '└─────────────────────────────────────────────────────────────────┘\n';
+                const dStats = calculateMealStats(day.dinner);
+                report += `    Итого: 🔥 ${dStats.kcal} ккал | 🥩 ${dStats.protein}г | 🥑 ${dStats.fat}г | 🍚 ${dStats.carbs}г | ⚖️ ${dStats.weight}г\n\n`;
+                day.dinner.forEach(p => {
+                    const k = calculateProductKBZH(p, p.weight);
+                    report += `    • ${p.name.padEnd(30)} ${p.weight}г  |  🔥${k.kcal}  🥩${k.protein}г  🥑${k.fat}г  🍚${k.carbs}г\n`;
+                });
+                report += '\n';
+            });
+            
+            // Total packing list
+            report += '═══════════════════════════════════════════════════════════════════\n';
+            report += '                     📦 ИТОГОВАЯ РАСКЛАДКА (на всех)\n';
+            report += '═══════════════════════════════════════════════════════════════════\n\n';
+            
+            const productTotals = new Map();
+            currentMenu.forEach(day => {
+                day.all.forEach(p => {
+                    const existing = productTotals.get(p.id) || { ...p, totalWeight: 0, totalKcal: 0, totalProtein: 0, totalFat: 0, totalCarbs: 0 };
+                    const kbzh = calculateProductKBZH(p, p.weight * members);
+                    existing.totalWeight += p.weight * members;
+                    existing.totalKcal += kbzh.kcal;
+                    existing.totalProtein += kbzh.protein;
+                    existing.totalFat += kbzh.fat;
+                    existing.totalCarbs += kbzh.carbs;
+                    productTotals.set(p.id, existing);
+                });
+            });
+            
+            const sortedTotals = Array.from(productTotals.values()).sort((a, b) => b.totalWeight - a.totalWeight);
+            
+            report += 'Продукт                          Вес       Ккал      Белки     Жиры      Углеводы\n';
+            report += '─────────────────────────────────────────────────────────────────────────────────\n';
+            
+            sortedTotals.forEach(item => {
+                report += `${item.name.padEnd(32)} ${String(Math.round(item.totalWeight)).padStart(6)}г  ${String(Math.round(item.totalKcal)).padStart(6)}  ${String(Math.round(item.totalProtein)).padStart(6)}г  ${String(Math.round(item.totalFat)).padStart(6)}г  ${String(Math.round(item.totalCarbs)).padStart(6)}г\n`;
+            });
+            
+            report += '\n';
+            report += '═══════════════════════════════════════════════════════════════════\n';
+            report += '                        💡 РЕКОМЕНДАЦИИ\n';
+            report += '═══════════════════════════════════════════════════════════════════\n\n';
+            report += '• Храните сублимированные продукты в герметичной таре\n';
+            report += '• Тушёнку и колбасу упакуйте отдельно от сухих продуктов\n';
+            report += '• Специи и соль — в мелких пакетиках\n';
+            report += '• Вес рассчитан на сухой продукт (до приготовления)\n';
+            report += '• Добавьте 10-15% запас на непредвиденные обстоятельства\n';
+            if (currentTripType === 'mountain') {
+                report += '• На высоте >2500м избегайте жирной пищи [^3^]\n';
+                report += '• Первые дни ешьте меньше (2400-2600 ккал) для адаптации [^3^]\n';
+            }
+            report += '\n';
+            
+            report += '═══════════════════════════════════════════════════════════════════\n';
+            report += '              Сгенерировано BackpackRation Pro\n';
+            report += '═══════════════════════════════════════════════════════════════════\n';
+            
+            return report;
+        }
+
+        function exportToText() {
+            if (currentMenu.length === 0) {
+                showNotification('⚠️ Сначала сгенерируйте меню!');
+                return;
+            }
+            
+            currentTextReport = generateTextReport();
+            const modal = document.getElementById('textExportModal');
+            const content = document.getElementById('textExportContent');
+            content.textContent = currentTextReport;
+            modal.classList.add('active');
+        }
+
+        function closeTextModal() {
+            document.getElementById('textExportModal').classList.remove('active');
+        }
+
+        function copyTextReport() {
+            navigator.clipboard.writeText(currentTextReport).then(() => {
+                showNotification('📋 Отчёт скопирован в буфер обмена!');
+            }).catch(() => {
+                showNotification('❌ Не удалось скопировать');
+            });
+        }
+
+        function downloadTextReport() {
+            const blob = new Blob([currentTextReport], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `BackpackRation_${currentTripType}_${new Date().toISOString().slice(0,10)}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showNotification('💾 Файл сохранён!');
+        }
+
+        function exportToPDF() {
+            window.print();
+        }
+
+        // ==========================================
+        // ACTIONS
+        // ==========================================
+        
+        function toggleLock(key, productId) {
+            if (lockedProducts.has(key)) {
+                lockedProducts.delete(key);
+            } else {
+                lockedProducts.set(key, productId);
+            }
+            generateMenu();
+        }
+
+        function removeProduct(dayIdx, mealType, idx) {
+            currentMenu[dayIdx][mealType].splice(idx, 1);
+            renderMenu();
+            renderSummaryKBZH();
+        }
+
+        function openReplaceModal(dayIdx, mealType, idx, category) {
+            currentEdit = { day: dayIdx, meal: mealType, index: idx, category };
+            const modal = document.getElementById('productModal');
+            const selector = document.getElementById('productSelector');
+            
+            const alternatives = PRODUCTS.filter(p => 
+                p.category === category && 
+                !excludedProducts.has(p.id)
+            );
+            
+            selector.innerHTML = alternatives.map(p => {
+                const kbzh = `🔥 ${p.kcal} · 🥩 ${p.protein}г · 🥑 ${p.fat}г · 🍚 ${p.carbs}г`;
+                return `
+                    <div class="product-option" onclick="replaceProduct('${p.id}')">
+                        <div class="product-icon ${CATEGORIES[p.category].color}">${CATEGORIES[p.category].icon}</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600;">${p.name}</div>
+                            <div class="option-kbzh">${kbzh} · ${p.baseWeight}г база</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            modal.classList.add('active');
+        }
+
+        function replaceProduct(newProductId) {
+            if (!currentEdit) return;
+            
+            const { day, meal, index } = currentEdit;
+            const newProd = PRODUCTS.find(p => p.id === newProductId);
+            const factors = getCurrentFactors();
+            const weight = calculateWeight(newProd, factors, day);
+            
+            currentMenu[day][meal][index] = { ...newProd, weight, locked: true };
+            lockedProducts.set(`${day}-${meal}-${index}`, newProductId);
+            
+            closeModal();
+            renderMenu();
+            renderSummaryKBZH();
+            renderWaterSection();
+            renderTotalGrid();
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').classList.remove('active');
+            currentEdit = null;
+        }
+
+        function getCurrentFactors() {
+            const km = parseInt(document.getElementById('kmPerDay').value) || 20;
+            const elevationGain = parseInt(document.getElementById('elevationGain').value) || 500;
+            const maxAltitude = parseInt(document.getElementById('maxAltitude').value) || 1500;
+            const temp = document.getElementById('temperature').value;
+            const method = document.getElementById('cookingMethod').value;
+            const difficulty = document.getElementById('difficulty').value;
+            return getLoadFactors(km, elevationGain, maxAltitude, temp, method, difficulty);
+        }
+
+        function setPackagingMode(mode) {
+            packagingMode = mode;
+            document.querySelectorAll('.packaging-toggle button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderTotalGrid();
+        }
+
+        function showNotification(text) {
+            const notif = document.getElementById('notification');
+            document.getElementById('notifText').textContent = text;
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 3000);
+        }
+
+        document.getElementById('productModal').addEventListener('click', (e) => {
+            if (e.target.id === 'productModal') closeModal();
+        });
+
+        document.getElementById('textExportModal').addEventListener('click', (e) => {
+            if (e.target.id === 'textExportModal') closeTextModal();
+        });
+
+        init();
     </script>
 </body>
 </html>
